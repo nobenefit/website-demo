@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nay Glam Beauty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F5F0EB; --brown: #7B4F3A; --brown-light: #A67C67;
+    --brown-dark: #4A2E1F; --grey: #9BA5A0; --gold: #C9A96E;
+    --text: #2C1F14; --text-muted: #7A6A5A;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(245,240,235,0.93);
+    backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid rgba(123,79,58,0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 500;
+    letter-spacing: 0.12em; color: var(--brown-dark); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--brown); }
+  .nav-cta {
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.6rem 1.6rem; border: 1px solid var(--brown); color: var(--brown);
+    background: transparent; cursor: pointer; transition: all 0.3s; font-family: 'Jost', sans-serif; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--brown); color: var(--cream); }
+
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; background: var(--cream); padding: 6rem 2rem 4rem; text-align: center;
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(8rem,20vw,18rem);
+    font-weight: 300; color: rgba(123,79,58,0.05); white-space: nowrap; pointer-events: none; user-select: none; line-height: 1;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after { content: ''; display: block; width: 40px; height: 0.5px; background: var(--gold); }
+  .hero-monogram {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(5rem,15vw,11rem);
+    font-weight: 300; color: var(--brown); line-height: 0.85; letter-spacing: -0.05em;
+    margin: 1rem 0; display: flex; justify-content: center; gap: 0.05em; align-items: flex-end;
+  }
+  .mono-n { color: var(--brown); }
+  .mono-g { color: var(--grey); font-size: 0.72em; }
+  .hero-sub { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2.5rem; margin-top: 0.5rem; }
+  .hero-desc {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic;
+    color: var(--text-muted); margin-bottom: 3rem; line-height: 1.8; max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+  .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 1rem 2.5rem; background: var(--brown); color: var(--cream); border: none; cursor: pointer;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--brown-dark); }
+  .btn-outline {
+    font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 1rem 2.5rem; background: transparent; color: var(--brown); border: 1px solid var(--brown);
+    cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--brown); color: var(--cream); }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .scroll-line { width: 0.5px; height: 50px; background: linear-gradient(to bottom, var(--brown-light), transparent); animation: scrollDown 1.8s ease-in-out infinite; }
+  @keyframes scrollDown { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .divider-wrap { background: var(--cream); padding: 0.5rem 4rem; }
+  .divider { display: flex; align-items: center; justify-content: center; gap: 1.5rem; }
+  .divider-line { flex: 1; max-width: 160px; height: 0.5px; background: var(--gold); opacity: 0.5; }
+  .divider-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); opacity: 0.7; }
+
+  section { padding: 6rem 4rem; }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; text-align: center; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3.2rem); font-weight: 300; text-align: center; color: var(--brown-dark); margin-bottom: 0.8rem; }
+  .section-title em { font-style: italic; color: var(--brown); }
+  .section-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; text-align: center; color: var(--text-muted); margin-bottom: 4rem; line-height: 1.8; }
+
+  .about { background: #EDE8E2; }
+  .about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
+  .about-img-frame {
+    width: 100%; aspect-ratio: 3/4; border: 1px solid rgba(123,79,58,0.25);
+    position: relative; background: #D4C9BE; display: flex; align-items: center; justify-content: center;
+  }
+  .about-img-frame svg { width: 55%; opacity: 0.3; }
+  .about-img-placeholder {
+    position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; text-align: center;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.85rem; color: rgba(123,79,58,0.5);
+  }
+  .about-text-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .about-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300; color: var(--brown-dark); line-height: 1.2; margin-bottom: 1.5rem; }
+  .about-text h2 em { font-style: italic; color: var(--brown); display: block; }
+  .about-text p { font-size: 0.9rem; line-height: 1.9; color: var(--text-muted); margin-bottom: 1.2rem; }
+  .about-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 0.5px solid rgba(123,79,58,0.2); }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--brown); line-height: 1; }
+  .stat-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem; }
+
+  .services { background: var(--cream); }
+  .services-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 0; }
+  .service-card { padding: 3rem 2.5rem; border: 0.5px solid rgba(123,79,58,0.12); position: relative; transition: all 0.4s; overflow: hidden; }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.4s; transform-origin: left; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: rgba(123,79,58,0.03); }
+  .service-num { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; color: rgba(123,79,58,0.1); line-height: 1; margin-bottom: 1.5rem; }
+  .service-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--brown-dark); margin-bottom: 1rem; }
+  .service-desc { font-size: 0.82rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .service-price { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--brown); font-style: italic; }
+  .service-includes { margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid rgba(123,79,58,0.12); list-style: none; }
+  .service-includes li { font-size: 0.75rem; color: var(--text-muted); padding: 0.3rem 0; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.6rem; }
+  .service-includes li::before { content: ''; display: block; width: 14px; height: 0.5px; background: var(--gold); }
+
+  .gallery-section { background: #2C1F14; padding: 6rem 4rem; }
+  .gallery-section .section-label { color: var(--gold); }
+  .gallery-section .section-title { color: #F5F0EB; }
+  .gallery-section .section-title em { color: var(--gold); }
+  .gallery-section .section-subtitle { color: rgba(245,240,235,0.5); }
+  .gallery-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr 1fr; grid-template-rows: 240px 240px; gap: 10px; }
+  .gallery-item { background: rgba(245,240,235,0.05); border: 0.5px solid rgba(245,240,235,0.1); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; transition: border-color 0.4s; }
+  .gallery-item:first-child { grid-row: 1 / 3; }
+  .gallery-item:hover { border-color: rgba(201,169,110,0.6); }
+  .gallery-placeholder { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; font-style: italic; color: rgba(245,240,235,0.2); text-align: center; padding: 1rem; }
+  .gallery-tag { position: absolute; bottom: 1rem; left: 1rem; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); padding: 0.3rem 0.7rem; border: 0.5px solid rgba(201,169,110,0.35); background: rgba(44,31,20,0.7); }
+
+  .process { background: #EDE8E2; }
+  .process-steps { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+  .process-steps::before { content: ''; position: absolute; top: 2rem; left: 12.5%; right: 12.5%; height: 0.5px; background: rgba(201,169,110,0.4); }
+  .process-step { padding: 0 1.5rem; text-align: center; }
+  .step-circle { width: 4rem; height: 4rem; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; color: var(--brown); background: #EDE8E2; position: relative; z-index: 1; }
+  .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--brown-dark); margin-bottom: 0.8rem; }
+  .step-desc { font-size: 0.78rem; line-height: 1.7; color: var(--text-muted); }
+
+  .testimonials { background: var(--cream); }
+  .testimonials-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+  .testi-card { padding: 2.5rem; border: 0.5px solid rgba(123,79,58,0.15); background: #EDE8E2; }
+  .testi-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+  .star { color: var(--gold); font-size: 0.8rem; }
+  .testi-quote { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; color: var(--gold); line-height: 0.6; margin-bottom: 1.2rem; opacity: 0.5; }
+  .testi-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; line-height: 1.8; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .testi-name { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brown); font-weight: 500; }
+  .testi-occasion { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.25rem; }
+
+  .booking { background: var(--brown-dark); padding: 7rem 4rem; }
+  .booking-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .booking .section-label { color: var(--gold); }
+  .booking .section-title { color: #F5F0EB; }
+  .booking .section-title em { color: var(--gold); }
+  .booking-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; color: rgba(245,240,235,0.5); margin-bottom: 3rem; line-height: 1.8; }
+  .booking-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; text-align: left; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1/-1; }
+  .form-group label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,235,0.45); }
+  .form-group input, .form-group select, .form-group textarea { background: rgba(245,240,235,0.07); border: 0.5px solid rgba(245,240,235,0.18); color: #F5F0EB; padding: 0.85rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.85rem; outline: none; transition: border-color 0.3s; appearance: none; -webkit-appearance: none; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(245,240,235,0.25); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: #4A2E1F; color: #F5F0EB; }
+  .form-group textarea { resize: none; min-height: 100px; }
+  .submit-btn { width: 100%; padding: 1.1rem; background: var(--gold); border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brown-dark); cursor: pointer; transition: all 0.3s; margin-top: 0.5rem; font-weight: 500; }
+  .submit-btn:hover { background: #D4B07A; }
+
+  footer { background: #1A0F08; padding: 4rem 4rem 2rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 0.5px solid rgba(245,240,235,0.08); margin-bottom: 2rem; }
+  .footer-brand h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; letter-spacing: 0.1em; color: #F5F0EB; text-transform: uppercase; margin-bottom: 1rem; }
+  .footer-brand p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; line-height: 1.8; color: rgba(245,240,235,0.4); }
+  .footer-col h4 { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { font-size: 0.8rem; color: rgba(245,240,235,0.4); padding: 0.35rem 0; cursor: pointer; transition: color 0.3s; }
+  .footer-col ul li:hover { color: #F5F0EB; }
+  .footer-bottom { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 0.7rem; color: rgba(245,240,235,0.22); letter-spacing: 0.1em; }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .social-link { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,235,0.3); cursor: pointer; transition: color 0.3s; text-decoration: none; }
+  .social-link:hover { color: var(--gold); }
+  .dev-credit { 
+    font-size: 0.75rem; 
+    color: rgba(245,240,235,0.5); 
+    letter-spacing: 0.05em; 
+    margin-top: 1.5rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .dev-credit a {
+  color: #999;
+  margin-left: auto;
+  margin-right: auto;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  display: inline;
+  float:none;
+}
+
+.dev-credit a:hover {
+  color: var(--gold); /* Your brand color on hover */
+}
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item:first-child { grid-row: auto; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .process-steps::before { display: none; }
+    .booking-form { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .gallery-section { padding: 4rem 1.5rem; }
+    .booking { padding: 4rem 1.5rem; }
+    footer { padding: 3rem 1.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Nay Glam Beauty</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <a class="nav-cta" href="#booking">Book Now</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg-text">Glam</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Mobile Makeup Artist</div>
+    <div class="hero-monogram">
+      <span class="mono-n">N</span><span class="mono-g">G</span>
+    </div>
+    <div class="hero-sub">Nay Glam Beauty</div>
+    <p class="hero-desc">Luxury bridal &amp; special event makeup — brought to your door. We create timeless beauty for your most unforgettable moments.</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#booking">Book Your Day</a>
+      <a class="btn-outline" href="#services">View Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="divider-wrap">
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div>
+      <div class="about-img-frame">
+        <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="45" cy="35" rx="28" ry="20" fill="none" stroke="#7B4F3A" stroke-width="0.9" transform="rotate(-15,45,35)"/>
+          <ellipse cx="72" cy="22" rx="22" ry="16" fill="none" stroke="#7B4F3A" stroke-width="0.9" transform="rotate(10,72,22)"/>
+          <ellipse cx="35" cy="58" rx="24" ry="17" fill="none" stroke="#7B4F3A" stroke-width="0.9" transform="rotate(28,35,58)"/>
+          <ellipse cx="68" cy="50" rx="18" ry="13" fill="none" stroke="#7B4F3A" stroke-width="0.7" transform="rotate(-8,68,50)"/>
+          <line x1="55" y1="78" x2="55" y2="155" stroke="#7B4F3A" stroke-width="1.2"/>
+          <path d="M55 102 Q28 88 20 72" stroke="#7B4F3A" stroke-width="0.8" fill="none"/>
+          <path d="M55 122 Q82 108 90 92" stroke="#7B4F3A" stroke-width="0.8" fill="none"/>
+          <path d="M55 142 Q30 128 22 115" stroke="#7B4F3A" stroke-width="0.8" fill="none"/>
+        </svg>
+        <div class="about-img-placeholder">Add your photo here</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="about-text-label">Our Story</div>
+      <h2>Beauty That Moves<em>With You</em></h2>
+      <p>Nay Glam Beauty is a premium mobile makeup service dedicated to making you feel extraordinary — right where you are. We believe every bride and every woman deserves flawless, personalised artistry without the stress of travel.</p>
+      <p>With a passion for enhancing natural beauty and a love for the art of transformation, we bring our full studio experience directly to your home, hotel, or venue.</p>
+      <div class="about-stats">
+        <div><div class="stat-num">200+</div><div class="stat-label">Happy Brides</div></div>
+        <div><div class="stat-num">5★</div><div class="stat-label">Rated Service</div></div>
+        <div><div class="stat-num">8+</div><div class="stat-label">Years Experience</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">Our <em>Services</em></h2>
+  <p class="section-subtitle">Crafted for your most significant moments</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Bridal Glam</div>
+      <div class="service-desc">Your wedding day, perfected. A full glam experience tailored entirely to your vision — from natural romance to dramatic elegance.</div>
+      <div class="service-price">From R850</div>
+      <ul class="service-includes">
+        <li>Full face application</li><li>Lashes included</li><li>Touch-up kit provided</li><li>On-location service</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Bridal Party</div>
+      <div class="service-desc">Keep your entire party looking stunning and coordinated. Group rates for bridesmaids, mothers of the bride, and more.</div>
+      <div class="service-price">From R550 per person</div>
+      <ul class="service-includes">
+        <li>Per-person pricing</li><li>Coordinated looks</li><li>Minimum 3 persons</li><li>Group discounts</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Special Events</div>
+      <div class="service-desc">Matric farewells, photoshoots, corporate events and milestone birthdays — look and feel your absolute best.</div>
+      <div class="service-price">From R450</div>
+      <ul class="service-includes">
+        <li>Event-ready looks</li><li>All skin types welcome</li><li>Long-wear formulas</li><li>Flexible scheduling</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section" id="gallery">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">The <em>Gallery</em></h2>
+  <p class="section-subtitle">A glimpse into our world of beauty</p>
+  <div class="gallery-grid">
+    <div class="gallery-item"><div class="gallery-placeholder">Your featured bridal portrait</div><span class="gallery-tag">Bridal</span></div>
+    <div class="gallery-item"><div class="gallery-placeholder">Portfolio image</div><span class="gallery-tag">Editorial</span></div>
+    <div class="gallery-item"><div class="gallery-placeholder">Portfolio image</div><span class="gallery-tag">Glam</span></div>
+    <div class="gallery-item"><div class="gallery-placeholder">Portfolio image</div><span class="gallery-tag">Natural</span></div>
+    <div class="gallery-item"><div class="gallery-placeholder">Portfolio image</div><span class="gallery-tag">Events</span></div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Your <em>Experience</em></h2>
+  <p class="section-subtitle">From enquiry to your perfect look</p>
+  <div class="process-steps">
+    <div class="process-step"><div class="step-circle">I</div><div class="step-title">Consultation</div><div class="step-desc">Share your vision, inspiration, and event details with us</div></div>
+    <div class="process-step"><div class="step-circle">II</div><div class="step-title">Trial Session</div><div class="step-desc">Perfect your look before the big day with a full trial</div></div>
+    <div class="process-step"><div class="step-circle">III</div><div class="step-title">We Come to You</div><div class="step-desc">We arrive at your chosen location fully prepared</div></div>
+    <div class="process-step"><div class="step-circle">IV</div><div class="step-title">Flawless &amp; Ready</div><div class="step-desc">Walk into your moment feeling confident and radiant</div></div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="section-label">Kind Words</div>
+  <h2 class="section-title">What Our <em>Brides Say</em></h2>
+  <p class="section-subtitle">Stories from our most cherished clients</p>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      <div class="testi-quote">"</div>
+      <div class="testi-text">Nay made me feel like an absolute queen on my wedding day. She came to the venue early, was so professional, and my makeup lasted all day and night. I'm still getting compliments!</div>
+      <div class="testi-name">Lerato Dlamini</div><div class="testi-occasion">Bride · September 2024</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      <div class="testi-quote">"</div>
+      <div class="testi-text">I booked Nay Glam for my entire bridal party of 6 and it was the best decision. Everyone looked stunning and the energy was so calm and positive — exactly what we needed on the morning.</div>
+      <div class="testi-name">Simone van der Merwe</div><div class="testi-occasion">Bride · March 2025</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      <div class="testi-quote">"</div>
+      <div class="testi-text">Booked for my matric farewell and I looked incredible. She listened to exactly what I wanted and delivered beyond my expectations. Definitely booking again for my 21st!</div>
+      <div class="testi-name">Ayanda Nkosi</div><div class="testi-occasion">Special Event · October 2024</div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Book Your <em>Glam</em></h2>
+    <p class="booking-sub">Fill in the form below and we'll be in touch within 24 hours to confirm your booking and answer any questions.</p>
+    <div class="booking-form">
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Full name" /></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+27" /></div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com" /></div>
+      <div class="form-group"><label>Event Date</label><input type="date" /></div>
+      <div class="form-group full"><label>Service Required</label>
+        <select><option value="">Select a service…</option><option>Bridal Glam</option><option>Bridal Party (Group)</option><option>Special Event / Matric</option><option>Photoshoot</option><option>Corporate Event</option></select>
+      </div>
+      <div class="form-group full"><label>Tell Us More</label><textarea placeholder="Event details, location, number of people, any inspiration…"></textarea></div>
+    </div>
+    <button class="submit-btn" onclick="this.textContent='Request Sent! We\'ll be in touch soon ✓'; this.style.opacity='0.7'; this.disabled=true;">Send Booking Request</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Nay Glam Beauty</h3>
+      <p>Luxury mobile makeup artistry for brides and special occasions. Your beauty, delivered to you.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul><li>Bridal Glam</li><li>Bridal Party</li><li>Special Events</li><li>Matric Farewell</li><li>Photoshoots</li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul><li>About Us</li><li>Gallery</li><li>Reviews</li><li>Book Now</li><li>Contact</li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul><li>WhatsApp Us</li><li>Instagram</li><li>Facebook</li><li>TikTok</li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Nay Glam Beauty. All rights reserved.</div>
+    <div class="footer-socials">
+      <a class="social-link" href="#">Instagram</a>
+      <a class="social-link" href="#">TikTok</a>
+      <a class="social-link" href="#">WhatsApp</a>
+    </div>
+  </div>
+  <div class="dev-credit">
+  <p>
+      Hand-coded by 
+      <a href="https://yourdomain.com" 
+         rel="nofollow noopener" 
+         target="_blank">
+         Your Name
+      </a>
+  </p>
+  </div>
+</footer>
+
+</body>
+</html>
