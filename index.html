@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -344,7 +345,6 @@
 
                 <!-- Cart Items List -->
                 <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-border/40">
-                    <!-- Dynamic Cart Items injected via JS -->
                     <div id="empty-cart-message" class="text-center py-16 text-gray-500">
                         <i class="fa-solid fa-cart-shopping text-4xl mb-3 text-gray-600"></i>
                         <p>Your cart is currently empty.</p>
@@ -499,10 +499,8 @@
 
     <!-- JavaScript for Cart & Checkout Functionality -->
     <script>
-        // Shopping Cart State
         let cart = [];
 
-        // DOM Elements
         const cartBtn = document.getElementById('cart-btn');
         const cartBadge = document.getElementById('cart-badge');
         const cartDrawer = document.getElementById('cart-drawer');
@@ -529,12 +527,10 @@
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        // Toggle Mobile Menu
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Toggle Cart Drawer
         function openCart() {
             cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
             cartPanel.classList.remove('translate-x-full');
@@ -548,7 +544,6 @@
         closeCartBtn.addEventListener('click', closeCart);
         cartBackdrop.addEventListener('click', closeCart);
 
-        // Filter Functionality
         const filterBtns = document.querySelectorAll('.filter-btn');
         const productCards = document.querySelectorAll('.product-card');
 
@@ -572,7 +567,6 @@
             });
         });
 
-        // Add to Cart
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', () => {
                 const id = button.getAttribute('data-id');
@@ -592,9 +586,7 @@
             });
         });
 
-        // Update Cart UI
         function updateCartUI() {
-            // Update badge count
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             if (totalCount > 0) {
                 cartBadge.textContent = totalCount;
@@ -603,7 +595,6 @@
                 cartBadge.classList.add('scale-0');
             }
 
-            // Render items
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = `
                     <div id="empty-cart-message" class="text-center py-16 text-gray-500">
@@ -648,7 +639,6 @@
             checkoutModalTotal.textContent = `R${subtotal.toLocaleString()}.00`;
         }
 
-        // Change Quantity
         window.changeQuantity = function(id, delta) {
             const item = cart.find(i => i.id === id);
             if (item) {
@@ -660,13 +650,11 @@
             }
         };
 
-        // Remove Item
         window.removeItem = function(id) {
             cart = cart.filter(i => i.id !== id);
             updateCartUI();
         };
 
-        // Proceed to Checkout Modal
         proceedCheckoutBtn.addEventListener('click', () => {
             closeCart();
             checkoutModal.classList.remove('hidden');
@@ -680,20 +668,16 @@
         cancelCheckoutBtn.addEventListener('click', closeCheckout);
         checkoutBackdrop.addEventListener('click', closeCheckout);
 
-        // Handle Checkout Form Submission
         checkoutForm.addEventListener('submit', (e) => {
             e.preventDefault();
             closeCheckout();
             
-            // Generate random reference
             const randomId = '#LOCAL-' + Math.floor(10000 + Math.random() * 90000);
             successOrderId.textContent = randomId;
             
-            // Clear cart
             cart = [];
             updateCartUI();
 
-            // Show success modal
             successModal.classList.remove('hidden');
         });
 
@@ -701,7 +685,6 @@
             successModal.classList.add('hidden');
         });
 
-        // Newsletter form prevent default
         document.getElementById('newsletter-form').addEventListener('submit', (e) => {
             e.preventDefault();
             alert('Thank you for subscribing to LOCAL.');
