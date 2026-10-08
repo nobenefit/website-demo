@@ -1,709 +1,712 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LOCAL — Your Code. Your People. Your Place.</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --black:#0a0a0a;--white:#f5f2ee;--cream:#e8e3db;--sand:#c9b99a;
-      --rust:#b84c2b;--dark:#1a1714;--mid:#6b5f52;
-      --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fs:'Cormorant Garamond',serif;
-    }
-    html{scroll-behavior:smooth}
-    body{background:var(--black);color:var(--white);font-family:var(--fb);font-weight:300;overflow-x:hidden}
-    ::-webkit-scrollbar{width:3px}
-    ::-webkit-scrollbar-track{background:var(--black)}
-    ::-webkit-scrollbar-thumb{background:var(--sand)}
-    .page{display:none;min-height:100vh}
-    .page.active{display:block}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 2.5rem;background:rgba(10,10,10,0.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,185,154,0.12)}
-    .nav-logo{font-family:var(--fd);font-size:1.9rem;letter-spacing:0.25em;color:var(--white);cursor:pointer;text-decoration:none}
-    .nav-links{display:flex;gap:2.2rem;list-style:none}
-    .nav-links a{font-size:0.72rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--sand);text-decoration:none;cursor:pointer;transition:color .3s;position:relative}
-    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--rust);transition:width .3s}
-    .nav-links a:hover,.nav-links a.active{color:var(--white)}
-    .nav-links a:hover::after,.nav-links a.active::after{width:100%}
-    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-    .hamburger span{display:block;width:24px;height:1.5px;background:var(--sand);transition:all .3s}
-    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
-    .hamburger.open span:nth-child(2){opacity:0}
-    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
-    .mobile-menu{display:none;position:fixed;top:58px;left:0;right:0;background:rgba(10,10,10,0.97);padding:2rem;z-index:99;flex-direction:column;gap:1.5rem;border-bottom:1px solid rgba(201,185,154,0.12)}
-    .mobile-menu.open{display:flex}
-    .mobile-menu a{font-family:var(--fd);font-size:2rem;letter-spacing:.1em;color:var(--sand);text-decoration:none;cursor:pointer;transition:color .2s}
-    .mobile-menu a:hover{color:var(--white)}
-    .cart-icon-container{position:relative;cursor:pointer;margin-left:2rem}
-    .cart-icon-container svg{width:26px;height:26px;stroke:var(--sand);transition:stroke .3s}
-    .cart-icon-container:hover svg{stroke:var(--white)}
-    .cart-count{position:absolute;top:-8px;right:-10px;background:var(--rust);color:var(--white);font-size:10px;font-weight:500;width:18px;height:18px;border-radius:50%;display:flex;justify-content:center;align-items:center;line-height:1;transform:scale(0);transition:transform .3s ease}
-    .cart-count.show{transform:scale(1)}
-    .btn-primary{background:var(--rust);color:var(--white);border:none;padding:.85rem 2.2rem;font-family:var(--fb);font-size:.75rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .3s,transform .2s}
-    .btn-primary:hover{background:#9a3d22;transform:translateY(-2px)}
-    .btn-outline{background:transparent;color:var(--sand);border:1px solid rgba(201,185,154,0.35);padding:.85rem 2.2rem;font-family:var(--fb);font-size:.75rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .3s}
-    .btn-outline:hover{border-color:var(--sand);color:var(--white)}
-    .btn-sm{padding:.6rem 1.5rem;font-size:.7rem}
-    .s-tag{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--rust);margin-bottom:.8rem}
-    .s-title{font-family:var(--fd);font-size:clamp(2.5rem,5vw,5rem);letter-spacing:.05em;line-height:1;color:var(--white);margin-bottom:1.2rem}
-    .s-sub{font-size:.88rem;line-height:1.9;color:var(--mid);max-width:520px}
-    .hero{height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:58px;overflow:hidden}
-    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 3rem 4rem 5vw;z-index:2}
-    .hero-tag{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);margin-bottom:1.2rem}
-    .hero-title{font-family:var(--fd);font-size:clamp(5rem,10vw,10rem);line-height:.88;letter-spacing:.04em;margin-bottom:.6rem}
-    .hero-tagline{font-family:var(--fs);font-style:italic;font-size:clamp(1rem,2vw,1.6rem);color:var(--sand);letter-spacing:.08em;margin-bottom:1.8rem}
-    .hero-sub{font-size:.88rem;line-height:1.85;color:var(--mid);max-width:360px;margin-bottom:2.5rem}
-    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-    .hero-right{position:relative;overflow:hidden}
-    .hero-img-grid{display:grid;grid-template-rows:1fr 1fr;height:100%;gap:2px}
-    .hero-img-block{background:var(--dark);position:relative;overflow:hidden}
-    .hero-img-block img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity .5s,transform .6s}
-    .hero-img-block:hover img{opacity:1;transform:scale(1.03)}
-    .hero-lbl{position:absolute;bottom:.8rem;right:.8rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);background:rgba(10,10,10,.7);padding:.25rem .6rem}
-    .scroll-hint{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:var(--mid);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;animation:bob 2s infinite}
-    .scroll-hint::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,var(--sand),transparent)}
-    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
-    .feat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,185,154,0.1);margin:0 5vw}
-    .feat-item{background:var(--dark);padding:2.5rem 2rem;transition:background .3s}
-    .feat-item:hover{background:#1f1c18}
-    .feat-num{font-family:var(--fd);font-size:3.5rem;color:rgba(201,185,154,.1);line-height:1;margin-bottom:1rem}
-    .feat-name{font-family:var(--fd);font-size:1.3rem;letter-spacing:.07em;color:var(--white);margin-bottom:.5rem}
-    .feat-desc{font-size:.8rem;line-height:1.8;color:var(--mid)}
-    .coll-preview{padding:5rem 5vw}
-    .coll-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
-    .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2px;background:rgba(201,185,154,.06)}
-    .prod-card{background:var(--dark);overflow:hidden;position:relative}
-    .prod-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .6s,opacity .4s;opacity:.85}
-    .prod-card:hover .prod-img{transform:scale(1.04);opacity:1}
-    .prod-info{padding:1rem 1.2rem 1.4rem}
-    .prod-cat{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:.3rem}
-    .prod-name{font-family:var(--fd);font-size:1.05rem;letter-spacing:.06em;color:var(--white);margin-bottom:.3rem}
-    .prod-price{font-size:.82rem;color:var(--sand);margin-bottom:1rem}
-    .cta-band{padding:5rem 5vw;text-align:center}
-    .cta-band .s-title{font-size:clamp(2rem,4vw,4rem);max-width:650px;margin:0 auto 1rem}
-    .cta-band .s-sub{margin:0 auto 2rem;text-align:center}
-    .about-hero{margin-top:58px;padding:5rem 5vw 3rem;background:var(--dark);position:relative;overflow:hidden;min-height:45vh;display:flex;align-items:flex-end}
-    .about-hero h1{font-family:var(--fd);font-size:clamp(4rem,9vw,9rem);line-height:.9;letter-spacing:.04em;position:relative;z-index:2}
-    .about-hero em{font-family:var(--fs);font-style:italic;font-size:clamp(1rem,2vw,1.6rem);color:var(--sand);display:block;margin-top:.5rem;position:relative;z-index:2}
-    .about-logo-bg{position:absolute;right:5vw;bottom:2rem;opacity:.06;font-family:var(--fd);font-size:clamp(8rem,18vw,18rem);letter-spacing:.05em;line-height:1;pointer-events:none}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;padding:5rem 5vw}
-    .about-img-wrap{position:relative}
-    .about-img-main{width:100%;aspect-ratio:4/5;object-fit:cover;opacity:.88}
-    .about-img-accent{position:absolute;width:42%;aspect-ratio:1;object-fit:cover;bottom:-1.5rem;right:-1.5rem;border:4px solid var(--black)}
-    .about-content p{font-size:.88rem;line-height:1.9;color:var(--mid);margin-bottom:1.4rem}
-    .about-content p strong{color:var(--sand);font-weight:400}
-    .vals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:rgba(201,185,154,.07);padding:0 5vw 5rem}
-    .val-card{background:var(--dark);padding:2.2rem 1.8rem}
-    .val-icon{font-size:1.6rem;margin-bottom:.8rem}
-    .val-title{font-family:var(--fd);font-size:1.15rem;letter-spacing:.06em;color:var(--white);margin-bottom:.5rem}
-    .val-desc{font-size:.78rem;line-height:1.8;color:var(--mid)}
-    .prod-hero{margin-top:58px;padding:4rem 5vw 2.5rem;background:var(--dark)}
-    .prod-hero h1{font-family:var(--fd);font-size:clamp(3rem,8vw,8rem);letter-spacing:.04em;line-height:.9}
-    .filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:2rem}
-    .filter-btn{background:transparent;border:1px solid rgba(201,185,154,.22);color:var(--mid);padding:.45rem 1.1rem;font-family:var(--fb);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .25s}
-    .filter-btn:hover,.filter-btn.active{background:var(--rust);border-color:var(--rust);color:var(--white)}
-    .prod-main{padding:2.5rem 5vw 5rem}
-    .cat-section{margin-bottom:3.5rem}
-    .cat-label{font-family:var(--fd);font-size:1.6rem;letter-spacing:.1em;color:rgba(201,185,154,.18);margin-bottom:1.2rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,185,154,.07)}
-    .gal-hero{margin-top:58px;padding:4rem 5vw 2.5rem;background:var(--dark)}
-    .gal-hero h1{font-family:var(--fd);font-size:clamp(3rem,8vw,8rem);letter-spacing:.04em;line-height:.9}
-    .gal-main{padding:2rem 5vw 5rem}
-    .masonry{columns:3;column-gap:3px}
-    .masonry-item{break-inside:avoid;margin-bottom:3px;position:relative;overflow:hidden;cursor:pointer}
-    .masonry-item img{width:100%;display:block;transition:transform .5s,opacity .4s;opacity:.82}
-    .masonry-item:hover img{transform:scale(1.04);opacity:1}
-    .masonry-overlay{position:absolute;inset:0;background:rgba(10,10,10,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
-    .masonry-item:hover .masonry-overlay{opacity:1}
-    .m-icon{font-size:1.4rem;color:var(--white)}
-    .con-hero{margin-top:58px;padding:4rem 5vw 2.5rem;background:var(--dark)}
-    .con-hero h1{font-family:var(--fd);font-size:clamp(3rem,8vw,8rem);letter-spacing:.04em;line-height:.9}
-    .con-main{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;padding:4rem 5vw 5rem;align-items:start}
-    .con-info h2{font-family:var(--fd);font-size:1.8rem;letter-spacing:.06em;margin-bottom:1.2rem}
-    .con-info p{font-size:.86rem;line-height:1.9;color:var(--mid);margin-bottom:1.8rem}
-    .con-detail{display:flex;flex-direction:column;gap:1.3rem}
-    .con-item{display:flex;gap:1rem;align-items:flex-start}
-    .con-icon{font-size:1rem;margin-top:2px}
-    .con-lbl{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.25rem}
-    .con-val{font-size:.85rem;color:var(--sand)}
-    .con-form{display:flex;flex-direction:column;gap:1.1rem}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
-    .fg{display:flex;flex-direction:column;gap:.35rem}
-    .fg label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand)}
-    .fg input,.fg textarea,.fg select{background:var(--dark);border:1px solid rgba(201,185,154,.18);color:var(--white);padding:.8rem .9rem;font-family:var(--fb);font-size:.86rem;outline:none;transition:border-color .3s;resize:none;width:100%}
-    .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--sand)}
-    .fg select option{background:var(--dark)}
-    .form-ok{display:none;background:rgba(184,76,43,.12);border:1px solid var(--rust);padding:1rem 1.2rem;font-size:.84rem;color:var(--sand);margin-top:.5rem}
-    footer{background:var(--dark);border-top:1px solid rgba(201,185,154,.1);padding:3.5rem 5vw 2rem}
-    .ft-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
-    .ft-brand .nav-logo{font-size:2.2rem;display:block;margin-bottom:.8rem}
-    .ft-brand p{font-size:.78rem;line-height:1.8;color:var(--mid)}
-    .ft-col h4{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sand);margin-bottom:1rem}
-    .ft-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
-    .ft-col ul li a{font-size:.8rem;color:var(--mid);text-decoration:none;cursor:pointer;transition:color .2s}
-    .ft-col ul li a:hover{color:var(--white)}
-    .ft-bottom{padding-top:1.5rem;border-top:1px solid rgba(201,185,154,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-    .ft-bottom p{font-size:.72rem;color:var(--mid)}
-    .social-links{display:flex;gap:1.2rem}
-    .social-links a{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s}
-    .social-links a:hover{color:var(--rust)}
-    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,185,154,.18),transparent);margin:0 5vw}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .f1{animation:fadeUp .65s ease forwards}
-    .f2{animation:fadeUp .65s .12s ease forwards;opacity:0}
-    .f3{animation:fadeUp .65s .24s ease forwards;opacity:0}
-    .f4{animation:fadeUp .65s .36s ease forwards;opacity:0}
-    .cart-panel{position:fixed;top:0;right:0;width:400px;max-width:90vw;height:100%;background:var(--dark);z-index:200;transform:translateX(100%);transition:transform .4s cubic-bezier(.25,.8,.25,1);display:flex;flex-direction:column;border-left:1px solid rgba(201,185,154,.15);box-shadow:-10px 0 30px rgba(0,0,0,.5)}
-    .cart-panel.open{transform:translateX(0)}
-    .cart-header{display:flex;justify-content:space-between;align-items:center;padding:1.5rem;border-bottom:1px solid rgba(201,185,154,.15)}
-    .cart-header h2{font-family:var(--fd);font-size:1.8rem;letter-spacing:.1em}
-    .close-cart-btn{background:none;border:none;color:var(--sand);font-size:1.5rem;cursor:pointer;transition:color .3s}
-    .close-cart-btn:hover{color:var(--white)}
-    .cart-items{flex-grow:1;overflow-y:auto;padding:1.5rem}
-    .cart-item{display:flex;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(201,185,154,.1)}
-    .cart-item-img{width:70px;height:90px;object-fit:cover}
-    .cart-item-info{flex-grow:1}
-    .cart-item-name{font-family:var(--fd);font-size:1.05rem;letter-spacing:.05em;margin-bottom:.25rem}
-    .cart-item-price{font-size:.82rem;color:var(--sand);margin-bottom:.4rem}
-    .quantity-controls{display:flex;align-items:center;gap:.6rem;margin-top:.4rem}
-    .quantity-controls button{background:transparent;border:1px solid rgba(201,185,154,.3);color:var(--sand);width:24px;height:24px;cursor:pointer;font-size:.9rem;line-height:1}
-    .quantity-controls button:hover{border-color:var(--sand);color:var(--white)}
-    .quantity-controls span{font-size:.85rem;min-width:20px;text-align:center}
-    .remove-item-btn{background:none;border:none;color:var(--mid);cursor:pointer;font-size:.72rem;text-decoration:underline;margin-top:.5rem;transition:color .3s}
-    .remove-item-btn:hover{color:var(--rust)}
-    .cart-footer{padding:1.5rem;border-top:1px solid rgba(201,185,154,.15)}
-    .cart-total{display:flex;justify-content:space-between;font-size:1.1rem;margin-bottom:1rem}
-    .cart-total span:first-child{font-family:var(--fd);letter-spacing:.1em}
-    .empty-cart-message{text-align:center;color:var(--mid);padding-top:3rem}
-    .checkout-btn{width:100%}
-    .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;opacity:0;pointer-events:none;transition:opacity .3s}
-    .cart-overlay.open{opacity:1;pointer-events:auto}
-    .modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,.85);backdrop-filter:blur(5px);z-index:300;display:none;justify-content:center;align-items:center;opacity:0;transition:opacity .3s ease;padding:1rem}
-    .modal-overlay.open{display:flex;opacity:1}
-    .modal-content{background:var(--dark);padding:2.5rem;width:100%;max-width:550px;max-height:90vh;overflow-y:auto;border:1px solid rgba(201,185,154,.2);position:relative;transform:scale(.95);transition:transform .3s ease}
-    .modal-overlay.open .modal-content{transform:scale(1)}
-    .modal-close-btn{position:absolute;top:1rem;right:1.5rem;background:none;border:none;color:var(--sand);font-size:1.8rem;cursor:pointer;transition:color .3s;line-height:1}
-    .modal-close-btn:hover{color:var(--white)}
-    .modal-content h2{font-family:var(--fd);font-size:2rem;letter-spacing:.1em;margin-bottom:1.5rem;text-align:center}
-    .modal-step{display:none}
-    .modal-step.active{display:block}
-    .modal-form{display:flex;flex-direction:column;gap:1rem}
-    .modal-btn-group{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;gap:1rem}
-    .confirmation-message{text-align:center;padding:2rem 0}
-    .confirmation-message h3{font-family:var(--fd);font-size:2rem;color:var(--rust);margin-bottom:1rem}
-    .confirmation-message p{color:var(--sand);font-size:.9rem;line-height:1.7}
-    @media(max-width:900px){
-      .hero{grid-template-columns:1fr}.hero-right{display:none}
-      .hero-left{padding:3rem 1.5rem}
-      nav{padding:1rem 1.5rem}.nav-links{display:none}.hamburger{display:flex}
-      .about-grid{grid-template-columns:1fr;gap:2rem}.about-img-accent{display:none}
-      .con-main{grid-template-columns:1fr}
-      .ft-grid{grid-template-columns:1fr 1fr}
-      .masonry{columns:2}
-      .feat-strip{grid-template-columns:1fr;margin:0}
-      .form-row{grid-template-columns:1fr}
-    }
-    @media(max-width:600px){
-      .masonry{columns:1}.ft-grid{grid-template-columns:1fr}
-      .vals-grid,.prod-main,.gal-main,.con-main,.coll-preview,.cta-band{padding-left:1.5rem;padding-right:1.5rem}
-      .prod-hero,.gal-hero,.con-hero,.about-hero{padding-left:1.5rem;padding-right:1.5rem}
-      .cart-icon-container{margin-left:1rem}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCAL — Your Code. Your People. Your Place.</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        card: '#141414',
+                        border: '#262626',
+                        gold: '#d4af37',
+                        'gold-light': '#f3e5ab',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0a0a0a; color: #f5f5f5; font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+    </style>
 </head>
-<body>
+<body class="bg-dark text-gray-100 antialiased selection:bg-gold selection:text-black">
 
-<nav>
-  <a class="nav-logo" onclick="go('home')">LOCAL</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a onclick="go('home')" id="n-home" class="active">Home</a></li>
-    <li><a onclick="go('about')" id="n-about">About Us</a></li>
-    <li><a onclick="go('products')" id="n-products">Products</a></li>
-    <li><a onclick="go('gallery')" id="n-gallery">Gallery</a></li>
-    <li><a onclick="go('contact')" id="n-contact">Contact</a></li>
-  </ul>
-  <div style="display:flex;align-items:center">
-    <div class="cart-icon-container" onclick="toggleCart()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-      <span class="cart-count" id="cartCount">0</span>
-    </div>
-    <div class="hamburger" id="hbg" onclick="toggleMenu()"><span></span><span></span><span></span></div>
-  </div>
-</nav>
-<div class="mobile-menu" id="mob">
-  <a onclick="go('home');closeMenu()">Home</a>
-  <a onclick="go('about');closeMenu()">About Us</a>
-  <a onclick="go('products');closeMenu()">Products</a>
-  <a onclick="go('gallery');closeMenu()">Gallery</a>
-  <a onclick="go('contact');closeMenu()">Contact</a>
-</div>
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-40 bg-dark/90 backdrop-blur-md border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="#" class="text-2xl font-extrabold tracking-wider text-white font-heading">
+                    LOCAL<span class="text-gold">.</span>
+                </a>
+                <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-gray-400 border-l border-border pl-3">Kimberley / Global</span>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#catalog" class="hover:text-gold transition-colors">Catalog</a>
+                <a href="#about" class="hover:text-gold transition-colors">About</a>
+                <a href="#community" class="hover:text-gold transition-colors">Community</a>
+                <a href="#contact" class="hover:text-gold transition-colors">Contact</a>
+            </nav>
 
-<div class="page active" id="page-home">
-  <section class="hero">
-    <div class="hero-left">
-      <p class="hero-tag f1">Est. 2024 — Your Code. Your People. Your Place.</p>
-      <h1 class="hero-title f2">LOCAL</h1>
-      <p class="hero-tagline f2">Wear your roots.</p>
-      <p class="hero-sub f3">Tracksuits built for real people, real streets, and real places. From Kimberley to Cape Town — LOCAL is your code.</p>
-      <div class="hero-btns f4">
-        <button class="btn-primary" onclick="go('products')">Shop Now</button>
-        <button class="btn-outline" onclick="go('about')">Our Story</button>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-img-grid">
-        <div class="hero-img-block">
-          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80" alt="LOCAL Men's Set"/>
-          <div class="hero-lbl">Men's Collection</div>
+            <div class="flex items-center space-x-4">
+                <!-- Cart Button Trigger -->
+                <button id="cart-btn" class="relative p-2.5 rounded-full bg-card border border-border hover:border-gold text-gray-300 hover:text-gold transition-all duration-200 focus:outline-none">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-gold text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center scale-0 transition-transform duration-200">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden p-2.5 rounded-full bg-card border border-border text-gray-300 hover:text-gold">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
         </div>
-        <div class="hero-img-block">
-          <img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&q=80" alt="LOCAL Women's Set"/>
-          <div class="hero-lbl">Women's Collection</div>
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-card border-b border-border px-6 py-4 space-y-3">
+            <a href="#catalog" class="block text-gray-300 hover:text-gold">Catalog</a>
+            <a href="#about" class="block text-gray-300 hover:text-gold">About</a>
+            <a href="#community" class="block text-gray-300 hover:text-gold">Community</a>
+            <a href="#contact" class="block text-gray-300 hover:text-gold">Contact</a>
         </div>
-      </div>
-    </div>
-    <div class="scroll-hint">Scroll</div>
-  </section>
+    </header>
 
-  <div class="feat-strip">
-    <div class="feat-item"><div class="feat-num">01</div><div class="feat-name">Your Postcode</div><div class="feat-desc">Each piece carries a postcode — a nod to where you're from. Wear your city with pride.</div></div>
-    <div class="feat-item"><div class="feat-num">02</div><div class="feat-name">Oversize Fit</div><div class="feat-desc">Premium weight fleece in a signature oversized cut. Comfortable, bold, and built to last.</div></div>
-    <div class="feat-item"><div class="feat-num">03</div><div class="feat-name">Multiple Colourways</div><div class="feat-desc">Grey, black, brown, cream, tan, navy, green — find your colour and own it.</div></div>
-  </div>
-
-  <div class="coll-preview">
-    <div class="coll-hdr">
-      <div><p class="s-tag">Featured</p><h2 class="s-title">New Arrivals</h2></div>
-      <button class="btn-outline" onclick="go('products')">View All</button>
-    </div>
-    <div class="prod-grid" id="homeProducts"></div>
-  </div>
-
-  <div class="divider"></div>
-  <div class="cta-band">
-    <p class="s-tag" style="text-align:center">The LOCAL Way</p>
-    <h2 class="s-title">Built different.<br>Worn with pride.</h2>
-    <p class="s-sub" style="margin:0 auto 2rem;text-align:center">LOCAL isn't just a brand — it's a movement. A nod to where you're from and who you're becoming.</p>
-    <button class="btn-primary" onclick="go('gallery')">See the Lookbook</button>
-  </div>
-
-  <footer>
-    <div class="ft-grid">
-      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
-      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('gallery')">Gallery</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li><li><a onclick="go('products')">Joggers</a></li></ul></div>
-      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
-    </div>
-    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
-  </footer>
-</div>
-
-<div class="page" id="page-about">
-  <div class="about-hero">
-    <div class="about-logo-bg">LOCAL</div>
-    <div>
-      <h1 class="f1">ABOUT<br>LOCAL</h1>
-      <em class="f2">Your Code. Your People. Your Place.</em>
-    </div>
-  </div>
-  <div class="about-grid">
-    <div class="about-img-wrap f1">
-      <img class="about-img-main" src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=800&q=80" alt="LOCAL Brand Story"/>
-      <img class="about-img-accent" src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&q=80" alt="LOCAL Logo"/>
-    </div>
-    <div class="about-content f2">
-      <p class="s-tag">Who We Are</p>
-      <h2 class="s-title">Born Local.<br>Built to Last.</h2>
-      <p>LOCAL was founded on a simple belief: <strong>where you come from shapes who you are.</strong> We started with a vision to create streetwear that felt real — no gimmicks, no excess, just clean design and quality craft.</p>
-      <p>Every collection we release carries a postcode — a tribute to the cities and communities that raised us. From <strong>8301 Kimberley</strong> to <strong>6835 George</strong> to <strong>CPT Cape Town</strong>, our pieces are a love letter to where you belong.</p>
-      <p>We believe fashion should empower, not define. Our tracksuits are made for <strong>real people living real lives</strong> — heavyweight fleece, oversized fits, and colourways that speak for themselves.</p>
-      <button class="btn-primary" onclick="go('products')" style="margin-top:.5rem">Shop the Collection</button>
-    </div>
-  </div>
-  <div class="vals-grid">
-    <div class="val-card"><div class="val-icon">📍</div><div class="val-title">Your Postcode</div><div class="val-desc">Every design is a tribute to a specific city or area. Wear your location with pride.</div></div>
-    <div class="val-card"><div class="val-icon">✊</div><div class="val-title">Community</div><div class="val-desc">We're rooted in local culture and committed to representing communities across SA.</div></div>
-    <div class="val-card"><div class="val-icon">🪡</div><div class="val-title">Quality</div><div class="val-desc">Premium heavyweight fleece. Structured fits. Crafted to last beyond a single season.</div></div>
-    <div class="val-card"><div class="val-icon">🔥</div><div class="val-title">Authenticity</div><div class="val-desc">We don't chase trends. LOCAL is built for people who know who they are.</div></div>
-  </div>
-  <footer>
-    <div class="ft-grid">
-      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
-      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('gallery')">Gallery</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li></ul></div>
-      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
-    </div>
-    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
-  </footer>
-</div>
-
-<div class="page" id="page-products">
-  <div class="prod-hero">
-    <p class="s-tag f1">2024 / 2025 Collection</p>
-    <h1 class="f2">OUR<br>PRODUCTS</h1>
-    <div class="filter-bar f3">
-      <button class="filter-btn active" onclick="filterP('all',this)">All</button>
-      <button class="filter-btn" onclick="filterP('mens',this)">Men's</button>
-      <button class="filter-btn" onclick="filterP('womens',this)">Women's</button>
-      <button class="filter-btn" onclick="filterP('sets',this)">Full Sets</button>
-    </div>
-  </div>
-  <div class="prod-main">
-    <div class="cat-section" data-cat="mens sets">
-      <div class="cat-label">Men's Sets</div>
-      <div class="prod-grid" id="menProducts"></div>
-    </div>
-    <div class="cat-section" data-cat="womens sets">
-      <div class="cat-label">Women's Sets</div>
-      <div class="prod-grid" id="womenProducts"></div>
-    </div>
-  </div>
-  <footer>
-    <div class="ft-grid">
-      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
-      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('gallery')">Gallery</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li><li><a onclick="go('products')">Joggers</a></li></ul></div>
-      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
-    </div>
-    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
-  </footer>
-</div>
-
-<div class="page" id="page-gallery">
-  <div class="gal-hero">
-    <p class="s-tag f1">Lookbook</p>
-    <h1 class="f2">THE<br>GALLERY</h1>
-  </div>
-  <div class="gal-main">
-    <div class="masonry">
-      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80" alt="LOOK 01"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
-      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80" alt="LOOK 02"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
-      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=600&q=80" alt="LOOK 03"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
-      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600&q=80" alt="LOOK 04"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
-      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" alt="LOOK 05"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
-      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="LOOK 06"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
-    </div>
-  </div>
-  <footer>
-    <div class="ft-grid">
-      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
-      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li></ul></div>
-      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
-    </div>
-    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
-  </footer>
-</div>
-
-<div class="page" id="page-contact">
-  <div class="con-hero">
-    <p class="s-tag f1">Get In Touch</p>
-    <h1 class="f2">CONTACT<br>US</h1>
-  </div>
-  <div class="con-main">
-    <div class="con-info f1">
-      <h2>Let's Talk</h2>
-      <p>Got questions about sizing, orders, or collabs? We're a small team but we move fast. Drop us a message and we'll get back to you within 24 hours.</p>
-      <div class="con-detail">
-        <div class="con-item"><div class="con-icon">📧</div><div><div class="con-lbl">Email</div><div class="con-val">hello@localclothing.co.za</div></div></div>
-        <div class="con-item"><div class="con-icon">📱</div><div><div class="con-lbl">Phone</div><div class="con-val">+27 82 000 0000</div></div></div>
-        <div class="con-item"><div class="con-icon">📍</div><div><div class="con-lbl">Based In</div><div class="con-val">Kimberley, Northern Cape, SA</div></div></div>
-      </div>
-    </div>
-    <form class="con-form f2" onsubmit="submitContact(event)">
-      <div class="form-row">
-        <div class="fg"><label>Name</label><input type="text" required/></div>
-        <div class="fg"><label>Email</label><input type="email" required/></div>
-      </div>
-      <div class="fg"><label>Subject</label><input type="text"/></div>
-      <div class="fg"><label>Message</label><textarea rows="5" required></textarea></div>
-      <button type="submit" class="btn-primary">Send Message</button>
-      <div class="form-ok" id="formOk">✓ Message sent! We'll be in touch soon.</div>
-    </form>
-  </div>
-  <footer>
-    <div class="ft-grid">
-      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
-      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('gallery')">Gallery</a></li></ul></div>
-      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li></ul></div>
-      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
-    </div>
-    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
-  </footer>
-</div>
-
-<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-
-<div class="cart-panel" id="cartPanel">
-  <div class="cart-header">
-    <h2>Your Cart</h2>
-    <button class="close-cart-btn" onclick="toggleCart()">✕</button>
-  </div>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="cart-total"><span>Total</span><span id="cartTotal">R 0</span></div>
-    <button class="btn-primary checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="checkoutModal">
-  <div class="modal-content">
-    <button class="modal-close-btn" onclick="closeCheckout()">✕</button>
-    <h2 id="checkoutTitle">Delivery Details</h2>
-
-    <div class="modal-step active" id="step1">
-      <form class="modal-form" onsubmit="goToPayment(event)">
-        <div class="form-row">
-          <div class="fg"><label>First Name</label><input type="text" id="fname" required/></div>
-          <div class="fg"><label>Last Name</label><input type="text" id="lname" required/></div>
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-24 sm:py-32 border-b border-border">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(212,175,55,0.08),transparent_50%)]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-card border border-border text-gold text-xs font-semibold uppercase tracking-widest mb-6">
+                Exclusive Collection 2026
+            </span>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight max-w-4xl mx-auto font-heading leading-tight">
+                Your Code. Your People. <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">Your Place.</span>
+            </h1>
+            <p class="mt-6 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-light">
+                Engineered for builders, creators, and visionaries. Premium apparel and tech accessories built with uncompromising luxury and quality.
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#catalog" class="px-8 py-4 rounded-xl bg-gold text-black font-semibold hover:bg-gold-light transition-all shadow-lg shadow-gold/10">
+                    Explore Collection
+                </a>
+                <a href="#about" class="px-8 py-4 rounded-xl bg-card border border-border text-white font-semibold hover:border-gold transition-all">
+                    Our Philosophy
+                </a>
+            </div>
         </div>
-        <div class="fg"><label>Email</label><input type="email" id="email" required/></div>
-        <div class="fg"><label>Phone</label><input type="tel" id="phone" required/></div>
-        <div class="fg"><label>Street Address</label><input type="text" id="address" required/></div>
-        <div class="form-row">
-          <div class="fg"><label>City</label><input type="text" id="city" required/></div>
-          <div class="fg"><label>Postal Code</label><input type="text" id="postal" required/></div>
+    </section>
+
+    <!-- Catalog Section with Interactive Filters -->
+    <section id="catalog" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <h2 class="text-3xl font-bold tracking-tight text-white font-heading">The Catalog</h2>
+                <p class="text-gray-400 mt-2 text-sm">Select items to add directly to your secure cart.</p>
+            </div>
+            <!-- Category Filter Buttons -->
+            <div class="mt-6 md:mt-0 flex flex-wrap gap-2" id="filter-container">
+                <button data-filter="all" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider bg-gold text-black transition-all">All Items</button>
+                <button data-filter="apparel" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider bg-card border border-border text-gray-300 hover:border-gold transition-all">Apparel</button>
+                <button data-filter="accessories" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider bg-card border border-border text-gray-300 hover:border-gold transition-all">Accessories</button>
+                <button data-filter="limited" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider bg-card border border-border text-gray-300 hover:border-gold transition-all">Limited Drops</button>
+            </div>
         </div>
-        <div class="fg"><label>Province</label>
-          <select id="province" required>
-            <option value="">Select Province</option>
-            <option>Eastern Cape</option><option>Free State</option><option>Gauteng</option>
-            <option>KwaZulu-Natal</option><option>Limpopo</option><option>Mpumalanga</option>
-            <option>Northern Cape</option><option>North West</option><option>Western Cape</option>
-          </select>
+
+        <!-- Product Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="product-card bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all group flex flex-col justify-between" data-category="apparel">
+                <div>
+                    <div class="h-64 bg-gradient-to-br from-neutral-900 to-neutral-800 relative flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-shirt text-6xl text-gray-700 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 left-4 bg-dark/80 backdrop-blur-md border border-border text-xs px-2.5 py-1 rounded-md text-gold font-medium">Apparel</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors font-heading">LOCAL Signature Heavyweight Hoodie</h3>
+                        <p class="text-sm text-gray-400 mt-2 line-clamp-2">Crafted from premium organic cotton fleece with custom matte hardware and reinforced double stitching.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
+                    <span class="text-xl font-bold text-white font-heading">R1,450.00</span>
+                    <button class="add-to-cart px-4 py-2.5 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold hover:text-black font-semibold text-sm transition-all flex items-center gap-2"
+                        data-id="1" data-name="LOCAL Signature Heavyweight Hoodie" data-price="1450" data-category="apparel">
+                        <i class="fa-solid fa-plus text-xs"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all group flex flex-col justify-between" data-category="accessories">
+                <div>
+                    <div class="h-64 bg-gradient-to-br from-neutral-900 to-neutral-800 relative flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-laptop text-6xl text-gray-700 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 left-4 bg-dark/80 backdrop-blur-md border border-border text-xs px-2.5 py-1 rounded-md text-gold font-medium">Accessories</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors font-heading">Minimalist Tech Sleeve</h3>
+                        <p class="text-sm text-gray-400 mt-2 line-clamp-2">Padded micro-suede internal lining engineered for ultimate laptop protection on the move.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
+                    <span class="text-xl font-bold text-white font-heading">R850.00</span>
+                    <button class="add-to-cart px-4 py-2.5 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold hover:text-black font-semibold text-sm transition-all flex items-center gap-2"
+                        data-id="2" data-name="Minimalist Tech Sleeve" data-price="850" data-category="accessories">
+                        <i class="fa-solid fa-plus text-xs"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all group flex flex-col justify-between" data-category="limited">
+                <div>
+                    <div class="h-64 bg-gradient-to-br from-neutral-900 to-neutral-800 relative flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-hat-cowboy text-6xl text-gray-700 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 left-4 bg-dark/80 backdrop-blur-md border border-border text-xs px-2.5 py-1 rounded-md text-gold font-medium">Limited Drop</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors font-heading">Founders Edition Structured Cap</h3>
+                        <p class="text-sm text-gray-400 mt-2 line-clamp-2">Limited run of 100 pieces featuring embroidered tone-on-tone LOCAL insignia.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
+                    <span class="text-xl font-bold text-white font-heading">R550.00</span>
+                    <button class="add-to-cart px-4 py-2.5 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold hover:text-black font-semibold text-sm transition-all flex items-center gap-2"
+                        data-id="3" data-name="Founders Edition Structured Cap" data-price="550" data-category="limited">
+                        <i class="fa-solid fa-plus text-xs"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all group flex flex-col justify-between" data-category="apparel">
+                <div>
+                    <div class="h-64 bg-gradient-to-br from-neutral-900 to-neutral-800 relative flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-vest text-6xl text-gray-700 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 left-4 bg-dark/80 backdrop-blur-md border border-border text-xs px-2.5 py-1 rounded-md text-gold font-medium">Apparel</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors font-heading">Architectural Oversized Tee</h3>
+                        <p class="text-sm text-gray-400 mt-2 line-clamp-2">Heavyweight 280GSM combed cotton built for structure, comfort, and longevity.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
+                    <span class="text-xl font-bold text-white font-heading">R600.00</span>
+                    <button class="add-to-cart px-4 py-2.5 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold hover:text-black font-semibold text-sm transition-all flex items-center gap-2"
+                        data-id="4" data-name="Architectural Oversized Tee" data-price="600" data-category="apparel">
+                        <i class="fa-solid fa-plus text-xs"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all group flex flex-col justify-between" data-category="accessories">
+                <div>
+                    <div class="h-64 bg-gradient-to-br from-neutral-900 to-neutral-800 relative flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-mug-hot text-6xl text-gray-700 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 left-4 bg-dark/80 backdrop-blur-md border border-border text-xs px-2.5 py-1 rounded-md text-gold font-medium">Accessories</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors font-heading">Ceramic Matte Desk Tumbler</h3>
+                        <p class="text-sm text-gray-400 mt-2 line-clamp-2">Double-wall vacuum insulated stainless steel container designed for all-day focus sessions.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
+                    <span class="text-xl font-bold text-white font-heading">R450.00</span>
+                    <button class="add-to-cart px-4 py-2.5 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold hover:text-black font-semibold text-sm transition-all flex items-center gap-2"
+                        data-id="5" data-name="Ceramic Matte Desk Tumbler" data-price="450" data-category="accessories">
+                        <i class="fa-solid fa-plus text-xs"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all group flex flex-col justify-between" data-category="limited">
+                <div>
+                    <div class="h-64 bg-gradient-to-br from-neutral-900 to-neutral-800 relative flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-ring text-6xl text-gray-700 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 left-4 bg-dark/80 backdrop-blur-md border border-border text-xs px-2.5 py-1 rounded-md text-gold font-medium">Limited Drop</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors font-heading">Titanium Signet Ring</h3>
+                        <p class="text-sm text-gray-400 mt-2 line-clamp-2">Aircraft-grade matte titanium ring with laser-etched coordinate geometry detailing.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
+                    <span class="text-xl font-bold text-white font-heading">R1,200.00</span>
+                    <button class="add-to-cart px-4 py-2.5 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold hover:text-black font-semibold text-sm transition-all flex items-center gap-2"
+                        data-id="6" data-name="Titanium Signet Ring" data-price="1200" data-category="limited">
+                        <i class="fa-solid fa-plus text-xs"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="modal-btn-group" style="justify-content:flex-end">
-          <button type="submit" class="btn-primary">Continue to Payment</button>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-card border-t border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-gold text-xs font-semibold uppercase tracking-widest">Built From Roots</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2 font-heading">Rooted in local craft, styled for the world stage.</h2>
+                <p class="text-gray-400 mt-6 font-light leading-relaxed">
+                    LOCAL was born out of a desire to unite creators, developers, and community leaders under a single banner of excellence. Whether you are debugging late into the night or building the framework for tomorrow, our pieces keep you anchored in style and comfort.
+                </p>
+                <div class="mt-8 grid grid-cols-2 gap-6">
+                    <div class="border-l-2 border-gold pl-4">
+                        <h4 class="text-2xl font-bold text-white font-heading">100%</h4>
+                        <p class="text-sm text-gray-400 mt-1">Premium Organic Materials</p>
+                    </div>
+                    <div class="border-l-2 border-gold pl-4">
+                        <h4 class="text-2xl font-bold text-white font-heading">Secure</h4>
+                        <p class="text-sm text-gray-400 mt-1">Encrypted Payment Gateway</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-neutral-900 border border-border rounded-2xl p-8 lg:p-12 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 text-neutral-800/40 text-9xl font-extrabold font-heading select-none pointer-events-none">L</div>
+                <h3 class="text-xl font-bold text-white font-heading">Our Core Pillars</h3>
+                <ul class="mt-6 space-y-4 text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-gold mt-1"></i>
+                        <span><strong>Uncompromising Quality:</strong> Durability tested for everyday creators.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-gold mt-1"></i>
+                        <span><strong>Community First:</strong> Designed with feedback from real builders and developers.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-gold mt-1"></i>
+                        <span><strong>Fast Dispatch:</strong> Reliable delivery straight to your doorstep.</span>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </form>
+    </section>
+
+    <!-- Community & Contact Section -->
+    <section id="community" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="text-gold text-xs font-semibold uppercase tracking-widest">Join The Network</span>
+        <h2 class="text-3xl font-bold text-white mt-2 font-heading">Stay Connected With LOCAL</h2>
+        <p class="text-gray-400 mt-2 max-w-xl mx-auto text-sm">Sign up for exclusive drop alerts, early access to limited items, and community updates.</p>
+        
+        <form id="newsletter-form" class="mt-8 max-w-md mx-auto flex gap-3">
+            <input type="email" required placeholder="Enter your email address" class="flex-1 bg-card border border-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-gold text-sm">
+            <button type="submit" class="px-6 py-3 rounded-xl bg-gold text-black font-semibold text-sm hover:bg-gold-light transition-all">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-card border-t border-border py-12 text-sm text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <a href="#" class="text-xl font-extrabold tracking-wider text-white font-heading">
+                    LOCAL<span class="text-gold">.</span>
+                </a>
+                <p class="mt-1 text-xs">Your Code. Your People. Your Place.</p>
+            </div>
+            <div class="flex space-x-6 text-lg">
+                <a href="#" class="hover:text-gold transition-colors"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="hover:text-gold transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="hover:text-gold transition-colors"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="hover:text-gold transition-colors"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            <p class="text-xs">&copy; 2026 LOCAL. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ==================== SHOPPING CART DRAWER & CHECKOUT MODAL ==================== -->
+
+    <!-- Cart Slide-Over Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none opacity-0 transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div id="cart-backdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm pointer-events-auto"></div>
+        
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="cart-panel" class="w-screen max-w-md bg-card border-l border-border transform translate-x-full transition-transform duration-300 ease-in-out pointer-events-auto flex flex-col">
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-border flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-bag-shopping text-gold"></i>
+                        <h2 class="text-lg font-bold text-white font-heading">Your Shopping Cart</h2>
+                    </div>
+                    <button id="close-cart-btn" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-neutral-800 transition-colors">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-border/40">
+                    <!-- Dynamic Cart Items injected via JS -->
+                    <div id="empty-cart-message" class="text-center py-16 text-gray-500">
+                        <i class="fa-solid fa-cart-shopping text-4xl mb-3 text-gray-600"></i>
+                        <p>Your cart is currently empty.</p>
+                    </div>
+                </div>
+
+                <!-- Cart Footer & Checkout Trigger -->
+                <div class="p-6 border-t border-border bg-dark/50">
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm text-gray-400">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal" class="font-medium text-white">R0.00</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-400">
+                            <span>Shipping</span>
+                            <span class="text-gold font-medium">Calculated at Checkout</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-border">
+                            <span>Total</span>
+                            <span id="cart-total" class="text-gold">R0.00</span>
+                        </div>
+                    </div>
+                    <button id="proceed-checkout-btn" disabled class="w-full py-4 rounded-xl bg-gold text-black font-semibold hover:bg-gold-light transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-gold/10">
+                        Proceed to Secure Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="modal-step" id="step2">
-      <form class="modal-form" onsubmit="submitOrder(event)">
-        <div class="fg"><label>Card Number</label><input type="text" id="cardNum" placeholder="1234 5678 9012 3456" required/></div>
-        <div class="fg"><label>Cardholder Name</label><input type="text" id="cardName" required/></div>
-        <div class="form-row">
-          <div class="fg"><label>Expiry Date</label><input type="text" id="expiry" placeholder="MM/YY" required/></div>
-          <div class="fg"><label>CVV</label><input type="text" id="cvv" placeholder="123" required/></div>
+    <!-- Checkout Modal with Delivery Details & Payment Section -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen px-4 text-center flex items-center justify-center">
+            <!-- Backdrop -->
+            <div id="checkout-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+
+            <!-- Modal Body -->
+            <div class="inline-block w-full max-w-2xl bg-card border border-border rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all my-8 relative z-10">
+                <div class="p-6 sm:p-8 border-b border-border flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white font-heading">Secure Checkout</h3>
+                        <p class="text-xs text-gray-400 mt-1">Enter your delivery details and payment information below.</p>
+                    </div>
+                    <button id="close-checkout-btn" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-neutral-800 transition-colors">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <form id="checkout-form" class="p-6 sm:p-8 space-y-6 max-h-[75vh] overflow-y-auto">
+                    <!-- Delivery Details Section -->
+                    <div>
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-gold mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-truck-fast"></i> Delivery Details
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">First Name</label>
+                                <input type="text" required name="firstName" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="Tumi">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Last Name</label>
+                                <input type="text" required name="lastName" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="Molefe">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Email Address</label>
+                                <input type="email" required name="email" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="tumi@example.com">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Street Address</label>
+                                <input type="text" required name="address" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="123 Du Toitspan Road">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">City</label>
+                                <input type="text" required name="city" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="Kimberley">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Province / State</label>
+                                <input type="text" required name="state" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="Northern Cape">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Postal Code</label>
+                                <input type="text" required name="postalCode" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="8301">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Phone Number</label>
+                                <input type="tel" required name="phone" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="+27 82 123 4567">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Section -->
+                    <div class="pt-4 border-t border-border">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-gold mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-credit-card"></i> Payment Information
+                        </h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Cardholder Name</label>
+                                <input type="text" required name="cardName" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold" placeholder="Tumi Molefe">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-400 mb-1">Card Number</label>
+                                <input type="text" required name="cardNumber" maxlength="19" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold font-mono" placeholder="4532 •••• •••• 8890">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-400 mb-1">Expiry Date</label>
+                                    <input type="text" required name="expiry" maxlength="5" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold font-mono" placeholder="MM/YY">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-400 mb-1">CVV / CVC</label>
+                                    <input type="password" required name="cvv" maxlength="4" class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold font-mono" placeholder="•••">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Actions -->
+                    <div class="pt-4 border-t border-border flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-gray-400">Total Due:</span>
+                            <div id="checkout-modal-total" class="text-lg font-bold text-gold font-heading">R0.00</div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" id="cancel-checkout-btn" class="px-5 py-3 rounded-xl bg-neutral-800 text-gray-300 font-semibold text-sm hover:bg-neutral-700 transition-all">Cancel</button>
+                            <button type="submit" id="pay-now-btn" class="px-6 py-3 rounded-xl bg-gold text-black font-semibold text-sm hover:bg-gold-light transition-all shadow-lg shadow-gold/10">Complete Order</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="modal-btn-group">
-          <button type="button" class="btn-outline" onclick="backToDelivery()">Back</button>
-          <button type="submit" class="btn-primary">Place Order</button>
+    </div>
+
+    <!-- Order Success Confirmation Modal -->
+    <div id="success-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen px-4 text-center flex items-center justify-center">
+            <div class="fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+            <div class="inline-block w-full max-w-md bg-card border border-border rounded-3xl p-8 text-center relative z-10 shadow-2xl">
+                <div class="w-16 h-16 bg-gold/10 border border-gold/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-check text-2xl text-gold"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white font-heading">Order Confirmed!</h3>
+                <p class="text-sm text-gray-400 mt-2">Thank you for your order. We've received your delivery details and payment successfully.</p>
+                <div class="my-6 p-4 rounded-xl bg-dark border border-border text-left space-y-2 text-xs">
+                    <div class="flex justify-between"><span class="text-gray-500">Order Reference:</span> <span id="success-order-id" class="text-white font-mono">#LOCAL-98421</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Estimated Delivery:</span> <span class="text-gold font-medium">2-4 Business Days</span></div>
+                </div>
+                <button id="close-success-btn" class="w-full py-3.5 rounded-xl bg-gold text-black font-semibold text-sm hover:bg-gold-light transition-all">Return to Store</button>
+            </div>
         </div>
-      </form>
     </div>
 
-    <div class="modal-step" id="step3">
-      <div class="confirmation-message">
-        <h3>✓ Order Confirmed!</h3>
-        <p>Thank you for shopping with LOCAL.<br>We've received your order and will be in touch shortly.<br><br>Order #<span id="orderNum"></span></p>
-        <button class="btn-primary" style="margin-top:1.5rem" onclick="closeCheckout()">Continue Shopping</button>
-      </div>
-    </div>
-  </div>
-</div>
+    <!-- JavaScript for Cart & Checkout Functionality -->
+    <script>
+        // Shopping Cart State
+        let cart = [];
 
-<script>
-// PRODUCT DATA — using placeholder images since I can't reuse your base64 without bloating the file
-const PRODUCTS = [
-  { id: 'p1', name: '8301 NAVY SET', cat: 'mens', catLabel: 'Tracksuit Set', price: 1200, img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80' },
-  { id: 'p2', name: 'CPT BLACK CROP SET', cat: 'womens', catLabel: "Women's Set", price: 1100, img: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80' },
-  { id: 'p3', name: 'BLOEM WHITE SET', cat: 'mens', catLabel: 'Tracksuit Set', price: 1200, img: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=600&q=80' },
-  { id: 'p4', name: '6835 OVERSIZE SET', cat: 'mens', catLabel: "Men's Set", price: 1200, img: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600&q=80' },
-  { id: 'p5', name: 'CPT GREY ACID WASH', cat: 'womens', catLabel: "Women's", price: 1100, img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80' },
-  { id: 'p6', name: 'CPT BLACK MARBLE', cat: 'womens', catLabel: "Women's", price: 1100, img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80' }
-];
+        // DOM Elements
+        const cartBtn = document.getElementById('cart-btn');
+        const cartBadge = document.getElementById('cart-badge');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartPanel = document.getElementById('cart-panel');
+        const cartBackdrop = document.getElementById('cart-backdrop');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const proceedCheckoutBtn = document.getElementById('proceed-checkout-btn');
 
-// NAVIGATION
-function go(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  const target = document.getElementById('page-' + page);
-  if (target) target.classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const navLink = document.getElementById('n-' + page);
-  if (navLink) navLink.classList.add('active');
-  window.scrollTo(0, 0);
-}
+        const checkoutModal = document.getElementById('checkout-modal');
+        const checkoutBackdrop = document.getElementById('checkout-backdrop');
+        const closeCheckoutBtn = document.getElementById('close-checkout-btn');
+        const cancelCheckoutBtn = document.getElementById('cancel-checkout-btn');
+        const checkoutForm = document.getElementById('checkout-form');
+        const checkoutModalTotal = document.getElementById('checkout-modal-total');
 
-function toggleMenu() {
-  document.getElementById('mob').classList.toggle('open');
-  document.getElementById('hbg').classList.toggle('open');
-}
-function closeMenu() {
-  document.getElementById('mob').classList.remove('open');
-  document.getElementById('hbg').classList.remove('open');
-}
+        const successModal = document.getElementById('success-modal');
+        const closeSuccessBtn = document.getElementById('close-success-btn');
+        const successOrderId = document.getElementById('success-order-id');
 
-// PRODUCTS RENDERING
-function createProductCard(p) {
-  const div = document.createElement('div');
-  div.className = 'prod-card';
-  div.setAttribute('data-cat', p.cat);
-  div.innerHTML = `
-    <img class="prod-img" src="${p.img}" alt="${p.name}"/>
-    <div class="prod-info">
-      <p class="prod-cat">${p.catLabel}</p>
-      <p class="prod-name">${p.name}</p>
-      <p class="prod-price">R ${p.price.toLocaleString()}</p>
-      <button class="btn-primary btn-sm add-to-cart-btn" onclick="addToCart('${p.id}')">Add to Cart</button>
-    </div>
-  `;
-  return div;
-}
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-function renderProducts() {
-  const homeGrid = document.getElementById('homeProducts');
-  const menGrid = document.getElementById('menProducts');
-  const womenGrid = document.getElementById('womenProducts');
-  if (homeGrid) {
-    homeGrid.innerHTML = '';
-    PRODUCTS.slice(0, 4).forEach(p => homeGrid.appendChild(createProductCard(p)));
-  }
-  if (menGrid) {
-    menGrid.innerHTML = '';
-    PRODUCTS.filter(p => p.cat === 'mens').forEach(p => menGrid.appendChild(createProductCard(p)));
-  }
-  if (womenGrid) {
-    womenGrid.innerHTML = '';
-    PRODUCTS.filter(p => p.cat === 'womens').forEach(p => womenGrid.appendChild(createProductCard(p)));
-  }
-}
+        // Toggle Mobile Menu
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-function filterP(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.cat-section').forEach(sec => {
-    const sCat = sec.getAttribute('data-cat');
-    if (cat === 'all') sec.style.display = '';
-    else if (cat === 'sets') sec.style.display = sCat.includes('sets') ? '' : 'none';
-    else sec.style.display = sCat.includes(cat) ? '' : 'none';
-  });
-}
+        // Toggle Cart Drawer
+        function openCart() {
+            cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
+            cartPanel.classList.remove('translate-x-full');
+        }
+        function closeCart() {
+            cartPanel.classList.add('translate-x-full');
+            cartDrawer.classList.add('pointer-events-none', 'opacity-0');
+        }
 
-// CART LOGIC
-let cart = JSON.parse(localStorage.getItem('localCart') || '[]');
+        cartBtn.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartBackdrop.addEventListener('click', closeCart);
 
-function saveCart() {
-  localStorage.setItem('localCart', JSON.stringify(cart));
-  updateCartUI();
-}
+        // Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
 
-function addToCart(id) {
-  const product = PRODUCTS.find(p => p.id === id);
-  if (!product) return;
-  const existing = cart.find(item => item.id === id);
-  if (existing) existing.qty += 1;
-  else cart.push({ ...product, qty: 1 });
-  saveCart();
-  openCart();
-}
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-gold', 'text-black');
+                    b.classList.add('bg-card', 'border', 'border-border', 'text-gray-300');
+                });
+                btn.classList.remove('bg-card', 'border', 'border-border', 'text-gray-300');
+                btn.classList.add('bg-gold', 'text-black');
 
-function removeFromCart(id) {
-  cart = cart.filter(item => item.id !== id);
-  saveCart();
-}
+                const filter = btn.getAttribute('data-filter');
+                productCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
 
-function changeQty(id, delta) {
-  const item = cart.find(i => i.id === id);
-  if (!item) return;
-  item.qty += delta;
-  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
-  saveCart();
-}
+        // Add to Cart
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                const category = button.getAttribute('data-category');
 
-function updateCartUI() {
-  const count = cart.reduce((sum, i) => sum + i.qty, 0);
-  const countEl = document.getElementById('cartCount');
-  countEl.textContent = count;
-  if (count > 0) countEl.classList.add('show');
-  else countEl.classList.remove('show');
+                const existingItem = cart.find(item => item.id === id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ id, name, price, category, quantity: 1 });
+                }
 
-  const itemsEl = document.getElementById('cartItems');
-  const footerEl = document.getElementById('cartFooter');
-  if (cart.length === 0) {
-    itemsEl.innerHTML = '<p class="empty-cart-message">Your cart is empty.</p>';
-    footerEl.style.display = 'none';
-    return;
-  }
-  footerEl.style.display = 'block';
-  itemsEl.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <img class="cart-item-img" src="${item.img}" alt="${item.name}"/>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">R ${item.price.toLocaleString()}</div>
-        <div class="quantity-controls">
-          <button onclick="changeQty('${item.id}', -1)">−</button>
-          <span>${item.qty}</span>
-          <button onclick="changeQty('${item.id}', 1)">+</button>
-        </div>
-        <button class="remove-item-btn" onclick="removeFromCart('${item.id}')">Remove</button>
-      </div>
-    </div>
-  `).join('');
+                updateCartUI();
+                openCart();
+            });
+        });
 
-  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-  document.getElementById('cartTotal').textContent = 'R ' + total.toLocaleString();
-}
+        // Update Cart UI
+        function updateCartUI() {
+            // Update badge count
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (totalCount > 0) {
+                cartBadge.textContent = totalCount;
+                cartBadge.classList.remove('scale-0');
+            } else {
+                cartBadge.classList.add('scale-0');
+            }
 
-function toggleCart() {
-  document.getElementById('cartPanel').classList.toggle('open');
-  document.getElementById('cartOverlay').classList.toggle('open');
-}
-function openCart() {
-  document.getElementById('cartPanel').classList.add('open');
-  document.getElementById('cartOverlay').classList.add('open');
-}
+            // Render items
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div id="empty-cart-message" class="text-center py-16 text-gray-500">
+                        <i class="fa-solid fa-cart-shopping text-4xl mb-3 text-gray-600"></i>
+                        <p>Your cart is currently empty.</p>
+                    </div>
+                `;
+                proceedCheckoutBtn.disabled = true;
+                cartSubtotal.textContent = 'R0.00';
+                cartTotal.textContent = 'R0.00';
+                return;
+            }
 
-// CHECKOUT
-function openCheckout() {
-  if (cart.length === 0) return;
-  document.getElementById('checkoutModal').classList.add('open');
-  showStep(1);
-}
-function closeCheckout() {
-  document.getElementById('checkoutModal').classList.remove('open');
-  if (document.getElementById('step3').classList.contains('active')) {
-    cart = [];
-    saveCart();
-    toggleCart();
-  }
-}
-function showStep(n) {
-  document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
-  document.getElementById('step' + n).classList.add('active');
-  const titles = { 1: 'Delivery Details', 2: 'Payment Information', 3: 'Order Complete' };
-  document.getElementById('checkoutTitle').textContent = titles[n];
-}
-function goToPayment(e) {
-  e.preventDefault();
-  showStep(2);
-}
-function backToDelivery() {
-  showStep(1);
-}
-function submitOrder(e) {
-  e.preventDefault();
-  document.getElementById('orderNum').textContent = 'LOC' + Math.floor(Math.random() * 90000 + 10000);
-  showStep(3);
-}
+            proceedCheckoutBtn.disabled = false;
+            cartItemsContainer.innerHTML = '';
+            
+            let subtotal = 0;
 
-// CONTACT
-function submitContact(e) {
-  e.preventDefault();
-  document.getElementById('formOk').style.display = 'block';
-  e.target.reset();
-  setTimeout(() => {
-    document.getElementById('formOk').style.display = 'none';
-  }, 4000);
-}
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                const itemEl = document.createElement('div');
+                itemEl.className = 'py-4 flex items-center justify-between gap-4';
+                itemEl.innerHTML = `
+                    <div class="flex-1">
+                        <h4 class="text-sm font-bold text-white font-heading">${item.name}</h4>
+                        <span class="text-xs text-gold">R${item.price.toLocaleString()}.00</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="changeQuantity('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-dark border border-border text-gray-300 hover:border-gold flex items-center justify-center text-xs">-</button>
+                        <span class="text-sm font-bold text-white w-6 text-center">${item.quantity}</span>
+                        <button onclick="changeQuantity('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-dark border border-border text-gray-300 hover:border-gold flex items-center justify-center text-xs">+</button>
+                    </div>
+                    <button onclick="removeItem('${item.id}')" class="text-gray-500 hover:text-red-400 p-1 text-sm transition-colors">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                cartItemsContainer.appendChild(itemEl);
+            });
 
-// INIT
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts();
-  updateCartUI();
-});
-</script>
+            cartSubtotal.textContent = `R${subtotal.toLocaleString()}.00`;
+            cartTotal.textContent = `R${subtotal.toLocaleString()}.00`;
+            checkoutModalTotal.textContent = `R${subtotal.toLocaleString()}.00`;
+        }
 
+        // Change Quantity
+        window.changeQuantity = function(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                updateCartUI();
+            }
+        };
+
+        // Remove Item
+        window.removeItem = function(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        };
+
+        // Proceed to Checkout Modal
+        proceedCheckoutBtn.addEventListener('click', () => {
+            closeCart();
+            checkoutModal.classList.remove('hidden');
+        });
+
+        function closeCheckout() {
+            checkoutModal.classList.add('hidden');
+        }
+
+        closeCheckoutBtn.addEventListener('click', closeCheckout);
+        cancelCheckoutBtn.addEventListener('click', closeCheckout);
+        checkoutBackdrop.addEventListener('click', closeCheckout);
+
+        // Handle Checkout Form Submission
+        checkoutForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            closeCheckout();
+            
+            // Generate random reference
+            const randomId = '#LOCAL-' + Math.floor(10000 + Math.random() * 90000);
+            successOrderId.textContent = randomId;
+            
+            // Clear cart
+            cart = [];
+            updateCartUI();
+
+            // Show success modal
+            successModal.classList.remove('hidden');
+        });
+
+        closeSuccessBtn.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+        });
+
+        // Newsletter form prevent default
+        document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for subscribing to LOCAL.');
+            e.target.reset();
+        });
+    </script>
 </body>
 </html>
