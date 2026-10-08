@@ -19,8 +19,6 @@
     ::-webkit-scrollbar-thumb{background:var(--sand)}
     .page{display:none;min-height:100vh}
     .page.active{display:block}
-
-    /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 2.5rem;background:rgba(10,10,10,0.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,185,154,0.12)}
     .nav-logo{font-family:var(--fd);font-size:1.9rem;letter-spacing:0.25em;color:var(--white);cursor:pointer;text-decoration:none}
     .nav-links{display:flex;gap:2.2rem;list-style:none}
@@ -37,27 +35,19 @@
     .mobile-menu.open{display:flex}
     .mobile-menu a{font-family:var(--fd);font-size:2rem;letter-spacing:.1em;color:var(--sand);text-decoration:none;cursor:pointer;transition:color .2s}
     .mobile-menu a:hover{color:var(--white)}
-
-    /* CART ICON */
     .cart-icon-container{position:relative;cursor:pointer;margin-left:2rem}
     .cart-icon-container svg{width:26px;height:26px;stroke:var(--sand);transition:stroke .3s}
     .cart-icon-container:hover svg{stroke:var(--white)}
     .cart-count{position:absolute;top:-8px;right:-10px;background:var(--rust);color:var(--white);font-size:10px;font-weight:500;width:18px;height:18px;border-radius:50%;display:flex;justify-content:center;align-items:center;line-height:1;transform:scale(0);transition:transform .3s ease}
     .cart-count.show{transform:scale(1)}
-
-    /* BUTTONS */
     .btn-primary{background:var(--rust);color:var(--white);border:none;padding:.85rem 2.2rem;font-family:var(--fb);font-size:.75rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .3s,transform .2s}
     .btn-primary:hover{background:#9a3d22;transform:translateY(-2px)}
     .btn-outline{background:transparent;color:var(--sand);border:1px solid rgba(201,185,154,0.35);padding:.85rem 2.2rem;font-family:var(--fb);font-size:.75rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .3s}
     .btn-outline:hover{border-color:var(--sand);color:var(--white)}
     .btn-sm{padding:.6rem 1.5rem;font-size:.7rem}
-
-    /* SECTION HELPERS */
     .s-tag{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--rust);margin-bottom:.8rem}
     .s-title{font-family:var(--fd);font-size:clamp(2.5rem,5vw,5rem);letter-spacing:.05em;line-height:1;color:var(--white);margin-bottom:1.2rem}
     .s-sub{font-size:.88rem;line-height:1.9;color:var(--mid);max-width:520px}
-
-    /* ── HOME ── */
     .hero{height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:58px;overflow:hidden}
     .hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 3rem 4rem 5vw;z-index:2}
     .hero-tag{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);margin-bottom:1.2rem}
@@ -74,14 +64,12 @@
     .scroll-hint{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:var(--mid);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;animation:bob 2s infinite}
     .scroll-hint::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,var(--sand),transparent)}
     @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
-
     .feat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,185,154,0.1);margin:0 5vw}
     .feat-item{background:var(--dark);padding:2.5rem 2rem;transition:background .3s}
     .feat-item:hover{background:#1f1c18}
     .feat-num{font-family:var(--fd);font-size:3.5rem;color:rgba(201,185,154,.1);line-height:1;margin-bottom:1rem}
     .feat-name{font-family:var(--fd);font-size:1.3rem;letter-spacing:.07em;color:var(--white);margin-bottom:.5rem}
     .feat-desc{font-size:.8rem;line-height:1.8;color:var(--mid)}
-
     .coll-preview{padding:5rem 5vw}
     .coll-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
     .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2px;background:rgba(201,185,154,.06)}
@@ -92,12 +80,9 @@
     .prod-cat{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:.3rem}
     .prod-name{font-family:var(--fd);font-size:1.05rem;letter-spacing:.06em;color:var(--white);margin-bottom:.3rem}
     .prod-price{font-size:.82rem;color:var(--sand);margin-bottom:1rem}
-
     .cta-band{padding:5rem 5vw;text-align:center}
     .cta-band .s-title{font-size:clamp(2rem,4vw,4rem);max-width:650px;margin:0 auto 1rem}
     .cta-band .s-sub{margin:0 auto 2rem;text-align:center}
-
-    /* ── ABOUT ── */
     .about-hero{margin-top:58px;padding:5rem 5vw 3rem;background:var(--dark);position:relative;overflow:hidden;min-height:45vh;display:flex;align-items:flex-end}
     .about-hero h1{font-family:var(--fd);font-size:clamp(4rem,9vw,9rem);line-height:.9;letter-spacing:.04em;position:relative;z-index:2}
     .about-hero em{font-family:var(--fs);font-style:italic;font-size:clamp(1rem,2vw,1.6rem);color:var(--sand);display:block;margin-top:.5rem;position:relative;z-index:2}
@@ -113,8 +98,6 @@
     .val-icon{font-size:1.6rem;margin-bottom:.8rem}
     .val-title{font-family:var(--fd);font-size:1.15rem;letter-spacing:.06em;color:var(--white);margin-bottom:.5rem}
     .val-desc{font-size:.78rem;line-height:1.8;color:var(--mid)}
-
-    /* ── PRODUCTS ── */
     .prod-hero{margin-top:58px;padding:4rem 5vw 2.5rem;background:var(--dark)}
     .prod-hero h1{font-family:var(--fd);font-size:clamp(3rem,8vw,8rem);letter-spacing:.04em;line-height:.9}
     .filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:2rem}
@@ -123,8 +106,6 @@
     .prod-main{padding:2.5rem 5vw 5rem}
     .cat-section{margin-bottom:3.5rem}
     .cat-label{font-family:var(--fd);font-size:1.6rem;letter-spacing:.1em;color:rgba(201,185,154,.18);margin-bottom:1.2rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,185,154,.07)}
-
-    /* ── GALLERY ── */
     .gal-hero{margin-top:58px;padding:4rem 5vw 2.5rem;background:var(--dark)}
     .gal-hero h1{font-family:var(--fd);font-size:clamp(3rem,8vw,8rem);letter-spacing:.04em;line-height:.9}
     .gal-main{padding:2rem 5vw 5rem}
@@ -135,8 +116,6 @@
     .masonry-overlay{position:absolute;inset:0;background:rgba(10,10,10,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
     .masonry-item:hover .masonry-overlay{opacity:1}
     .m-icon{font-size:1.4rem;color:var(--white)}
-
-    /* ── CONTACT ── */
     .con-hero{margin-top:58px;padding:4rem 5vw 2.5rem;background:var(--dark)}
     .con-hero h1{font-family:var(--fd);font-size:clamp(3rem,8vw,8rem);letter-spacing:.04em;line-height:.9}
     .con-main{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;padding:4rem 5vw 5rem;align-items:start}
@@ -155,8 +134,6 @@
     .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--sand)}
     .fg select option{background:var(--dark)}
     .form-ok{display:none;background:rgba(184,76,43,.12);border:1px solid var(--rust);padding:1rem 1.2rem;font-size:.84rem;color:var(--sand);margin-top:.5rem}
-
-    /* FOOTER */
     footer{background:var(--dark);border-top:1px solid rgba(201,185,154,.1);padding:3.5rem 5vw 2rem}
     .ft-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
     .ft-brand .nav-logo{font-size:2.2rem;display:block;margin-bottom:.8rem}
@@ -171,15 +148,11 @@
     .social-links a{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s}
     .social-links a:hover{color:var(--rust)}
     .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,185,154,.18),transparent);margin:0 5vw}
-
-    /* FADE */
     @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
     .f1{animation:fadeUp .65s ease forwards}
     .f2{animation:fadeUp .65s .12s ease forwards;opacity:0}
     .f3{animation:fadeUp .65s .24s ease forwards;opacity:0}
     .f4{animation:fadeUp .65s .36s ease forwards;opacity:0}
-
-    /* --- CART PANEL --- */
     .cart-panel{position:fixed;top:0;right:0;width:400px;max-width:90vw;height:100%;background:var(--dark);z-index:200;transform:translateX(100%);transition:transform .4s cubic-bezier(.25,.8,.25,1);display:flex;flex-direction:column;border-left:1px solid rgba(201,185,154,.15);box-shadow:-10px 0 30px rgba(0,0,0,.5)}
     .cart-panel.open{transform:translateX(0)}
     .cart-header{display:flex;justify-content:space-between;align-items:center;padding:1.5rem;border-bottom:1px solid rgba(201,185,154,.15)}
@@ -205,8 +178,6 @@
     .checkout-btn{width:100%}
     .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;opacity:0;pointer-events:none;transition:opacity .3s}
     .cart-overlay.open{opacity:1;pointer-events:auto}
-
-    /* --- CHECKOUT MODAL --- */
     .modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,.85);backdrop-filter:blur(5px);z-index:300;display:none;justify-content:center;align-items:center;opacity:0;transition:opacity .3s ease;padding:1rem}
     .modal-overlay.open{display:flex;opacity:1}
     .modal-content{background:var(--dark);padding:2.5rem;width:100%;max-width:550px;max-height:90vh;overflow-y:auto;border:1px solid rgba(201,185,154,.2);position:relative;transform:scale(.95);transition:transform .3s ease}
@@ -221,8 +192,6 @@
     .confirmation-message{text-align:center;padding:2rem 0}
     .confirmation-message h3{font-family:var(--fd);font-size:2rem;color:var(--rust);margin-bottom:1rem}
     .confirmation-message p{color:var(--sand);font-size:.9rem;line-height:1.7}
-
-    /* RESPONSIVE */
     @media(max-width:900px){
       .hero{grid-template-columns:1fr}.hero-right{display:none}
       .hero-left{padding:3rem 1.5rem}
@@ -269,7 +238,6 @@
   <a onclick="go('contact');closeMenu()">Contact</a>
 </div>
 
-<!-- ══ HOME ══ -->
 <div class="page active" id="page-home">
   <section class="hero">
     <div class="hero-left">
@@ -322,4 +290,420 @@
   <footer>
     <div class="ft-grid">
       <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
-      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a
+      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('gallery')">Gallery</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li><li><a onclick="go('products')">Joggers</a></li></ul></div>
+      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
+    </div>
+    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
+  </footer>
+</div>
+
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="about-logo-bg">LOCAL</div>
+    <div>
+      <h1 class="f1">ABOUT<br>LOCAL</h1>
+      <em class="f2">Your Code. Your People. Your Place.</em>
+    </div>
+  </div>
+  <div class="about-grid">
+    <div class="about-img-wrap f1">
+      <img class="about-img-main" src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=800&q=80" alt="LOCAL Brand Story"/>
+      <img class="about-img-accent" src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&q=80" alt="LOCAL Logo"/>
+    </div>
+    <div class="about-content f2">
+      <p class="s-tag">Who We Are</p>
+      <h2 class="s-title">Born Local.<br>Built to Last.</h2>
+      <p>LOCAL was founded on a simple belief: <strong>where you come from shapes who you are.</strong> We started with a vision to create streetwear that felt real — no gimmicks, no excess, just clean design and quality craft.</p>
+      <p>Every collection we release carries a postcode — a tribute to the cities and communities that raised us. From <strong>8301 Kimberley</strong> to <strong>6835 George</strong> to <strong>CPT Cape Town</strong>, our pieces are a love letter to where you belong.</p>
+      <p>We believe fashion should empower, not define. Our tracksuits are made for <strong>real people living real lives</strong> — heavyweight fleece, oversized fits, and colourways that speak for themselves.</p>
+      <button class="btn-primary" onclick="go('products')" style="margin-top:.5rem">Shop the Collection</button>
+    </div>
+  </div>
+  <div class="vals-grid">
+    <div class="val-card"><div class="val-icon">📍</div><div class="val-title">Your Postcode</div><div class="val-desc">Every design is a tribute to a specific city or area. Wear your location with pride.</div></div>
+    <div class="val-card"><div class="val-icon">✊</div><div class="val-title">Community</div><div class="val-desc">We're rooted in local culture and committed to representing communities across SA.</div></div>
+    <div class="val-card"><div class="val-icon">🪡</div><div class="val-title">Quality</div><div class="val-desc">Premium heavyweight fleece. Structured fits. Crafted to last beyond a single season.</div></div>
+    <div class="val-card"><div class="val-icon">🔥</div><div class="val-title">Authenticity</div><div class="val-desc">We don't chase trends. LOCAL is built for people who know who they are.</div></div>
+  </div>
+  <footer>
+    <div class="ft-grid">
+      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
+      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('gallery')">Gallery</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li></ul></div>
+      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
+    </div>
+    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
+  </footer>
+</div>
+
+<div class="page" id="page-products">
+  <div class="prod-hero">
+    <p class="s-tag f1">2024 / 2025 Collection</p>
+    <h1 class="f2">OUR<br>PRODUCTS</h1>
+    <div class="filter-bar f3">
+      <button class="filter-btn active" onclick="filterP('all',this)">All</button>
+      <button class="filter-btn" onclick="filterP('mens',this)">Men's</button>
+      <button class="filter-btn" onclick="filterP('womens',this)">Women's</button>
+      <button class="filter-btn" onclick="filterP('sets',this)">Full Sets</button>
+    </div>
+  </div>
+  <div class="prod-main">
+    <div class="cat-section" data-cat="mens sets">
+      <div class="cat-label">Men's Sets</div>
+      <div class="prod-grid" id="menProducts"></div>
+    </div>
+    <div class="cat-section" data-cat="womens sets">
+      <div class="cat-label">Women's Sets</div>
+      <div class="prod-grid" id="womenProducts"></div>
+    </div>
+  </div>
+  <footer>
+    <div class="ft-grid">
+      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
+      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('gallery')">Gallery</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li><li><a onclick="go('products')">Joggers</a></li></ul></div>
+      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
+    </div>
+    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
+  </footer>
+</div>
+
+<div class="page" id="page-gallery">
+  <div class="gal-hero">
+    <p class="s-tag f1">Lookbook</p>
+    <h1 class="f2">THE<br>GALLERY</h1>
+  </div>
+  <div class="gal-main">
+    <div class="masonry">
+      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80" alt="LOOK 01"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
+      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80" alt="LOOK 02"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
+      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=600&q=80" alt="LOOK 03"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
+      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600&q=80" alt="LOOK 04"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
+      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" alt="LOOK 05"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
+      <div class="masonry-item"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="LOOK 06"/><div class="masonry-overlay"><span class="m-icon">+</span></div></div>
+    </div>
+  </div>
+  <footer>
+    <div class="ft-grid">
+      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
+      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li></ul></div>
+      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
+    </div>
+    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
+  </footer>
+</div>
+
+<div class="page" id="page-contact">
+  <div class="con-hero">
+    <p class="s-tag f1">Get In Touch</p>
+    <h1 class="f2">CONTACT<br>US</h1>
+  </div>
+  <div class="con-main">
+    <div class="con-info f1">
+      <h2>Let's Talk</h2>
+      <p>Got questions about sizing, orders, or collabs? We're a small team but we move fast. Drop us a message and we'll get back to you within 24 hours.</p>
+      <div class="con-detail">
+        <div class="con-item"><div class="con-icon">📧</div><div><div class="con-lbl">Email</div><div class="con-val">hello@localclothing.co.za</div></div></div>
+        <div class="con-item"><div class="con-icon">📱</div><div><div class="con-lbl">Phone</div><div class="con-val">+27 82 000 0000</div></div></div>
+        <div class="con-item"><div class="con-icon">📍</div><div><div class="con-lbl">Based In</div><div class="con-val">Kimberley, Northern Cape, SA</div></div></div>
+      </div>
+    </div>
+    <form class="con-form f2" onsubmit="submitContact(event)">
+      <div class="form-row">
+        <div class="fg"><label>Name</label><input type="text" required/></div>
+        <div class="fg"><label>Email</label><input type="email" required/></div>
+      </div>
+      <div class="fg"><label>Subject</label><input type="text"/></div>
+      <div class="fg"><label>Message</label><textarea rows="5" required></textarea></div>
+      <button type="submit" class="btn-primary">Send Message</button>
+      <div class="form-ok" id="formOk">✓ Message sent! We'll be in touch soon.</div>
+    </form>
+  </div>
+  <footer>
+    <div class="ft-grid">
+      <div class="ft-brand"><span class="nav-logo">LOCAL</span><p>Your Code. Your People. Your Place. — Est. 2024</p></div>
+      <div class="ft-col"><h4>Navigate</h4><ul><li><a onclick="go('home')">Home</a></li><li><a onclick="go('about')">About Us</a></li><li><a onclick="go('products')">Products</a></li><li><a onclick="go('gallery')">Gallery</a></li></ul></div>
+      <div class="ft-col"><h4>Collections</h4><ul><li><a onclick="go('products')">Men's Sets</a></li><li><a onclick="go('products')">Women's Sets</a></li><li><a onclick="go('products')">Hoodies</a></li></ul></div>
+      <div class="ft-col"><h4>Info</h4><ul><li><a onclick="go('contact')">Contact Us</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Returns</a></li></ul></div>
+    </div>
+    <div class="ft-bottom"><p>© 2025 LOCAL Clothing. All rights reserved.</p><div class="social-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
+  </footer>
+</div>
+
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <button class="close-cart-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">R 0</span></div>
+    <button class="btn-primary checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal-content">
+    <button class="modal-close-btn" onclick="closeCheckout()">✕</button>
+    <h2 id="checkoutTitle">Delivery Details</h2>
+
+    <div class="modal-step active" id="step1">
+      <form class="modal-form" onsubmit="goToPayment(event)">
+        <div class="form-row">
+          <div class="fg"><label>First Name</label><input type="text" id="fname" required/></div>
+          <div class="fg"><label>Last Name</label><input type="text" id="lname" required/></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" id="email" required/></div>
+        <div class="fg"><label>Phone</label><input type="tel" id="phone" required/></div>
+        <div class="fg"><label>Street Address</label><input type="text" id="address" required/></div>
+        <div class="form-row">
+          <div class="fg"><label>City</label><input type="text" id="city" required/></div>
+          <div class="fg"><label>Postal Code</label><input type="text" id="postal" required/></div>
+        </div>
+        <div class="fg"><label>Province</label>
+          <select id="province" required>
+            <option value="">Select Province</option>
+            <option>Eastern Cape</option><option>Free State</option><option>Gauteng</option>
+            <option>KwaZulu-Natal</option><option>Limpopo</option><option>Mpumalanga</option>
+            <option>Northern Cape</option><option>North West</option><option>Western Cape</option>
+          </select>
+        </div>
+        <div class="modal-btn-group" style="justify-content:flex-end">
+          <button type="submit" class="btn-primary">Continue to Payment</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-step" id="step2">
+      <form class="modal-form" onsubmit="submitOrder(event)">
+        <div class="fg"><label>Card Number</label><input type="text" id="cardNum" placeholder="1234 5678 9012 3456" required/></div>
+        <div class="fg"><label>Cardholder Name</label><input type="text" id="cardName" required/></div>
+        <div class="form-row">
+          <div class="fg"><label>Expiry Date</label><input type="text" id="expiry" placeholder="MM/YY" required/></div>
+          <div class="fg"><label>CVV</label><input type="text" id="cvv" placeholder="123" required/></div>
+        </div>
+        <div class="modal-btn-group">
+          <button type="button" class="btn-outline" onclick="backToDelivery()">Back</button>
+          <button type="submit" class="btn-primary">Place Order</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-step" id="step3">
+      <div class="confirmation-message">
+        <h3>✓ Order Confirmed!</h3>
+        <p>Thank you for shopping with LOCAL.<br>We've received your order and will be in touch shortly.<br><br>Order #<span id="orderNum"></span></p>
+        <button class="btn-primary" style="margin-top:1.5rem" onclick="closeCheckout()">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// PRODUCT DATA — using placeholder images since I can't reuse your base64 without bloating the file
+const PRODUCTS = [
+  { id: 'p1', name: '8301 NAVY SET', cat: 'mens', catLabel: 'Tracksuit Set', price: 1200, img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80' },
+  { id: 'p2', name: 'CPT BLACK CROP SET', cat: 'womens', catLabel: "Women's Set", price: 1100, img: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80' },
+  { id: 'p3', name: 'BLOEM WHITE SET', cat: 'mens', catLabel: 'Tracksuit Set', price: 1200, img: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=600&q=80' },
+  { id: 'p4', name: '6835 OVERSIZE SET', cat: 'mens', catLabel: "Men's Set", price: 1200, img: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600&q=80' },
+  { id: 'p5', name: 'CPT GREY ACID WASH', cat: 'womens', catLabel: "Women's", price: 1100, img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80' },
+  { id: 'p6', name: 'CPT BLACK MARBLE', cat: 'womens', catLabel: "Women's", price: 1100, img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80' }
+];
+
+// NAVIGATION
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navLink = document.getElementById('n-' + page);
+  if (navLink) navLink.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleMenu() {
+  document.getElementById('mob').classList.toggle('open');
+  document.getElementById('hbg').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mob').classList.remove('open');
+  document.getElementById('hbg').classList.remove('open');
+}
+
+// PRODUCTS RENDERING
+function createProductCard(p) {
+  const div = document.createElement('div');
+  div.className = 'prod-card';
+  div.setAttribute('data-cat', p.cat);
+  div.innerHTML = `
+    <img class="prod-img" src="${p.img}" alt="${p.name}"/>
+    <div class="prod-info">
+      <p class="prod-cat">${p.catLabel}</p>
+      <p class="prod-name">${p.name}</p>
+      <p class="prod-price">R ${p.price.toLocaleString()}</p>
+      <button class="btn-primary btn-sm add-to-cart-btn" onclick="addToCart('${p.id}')">Add to Cart</button>
+    </div>
+  `;
+  return div;
+}
+
+function renderProducts() {
+  const homeGrid = document.getElementById('homeProducts');
+  const menGrid = document.getElementById('menProducts');
+  const womenGrid = document.getElementById('womenProducts');
+  if (homeGrid) {
+    homeGrid.innerHTML = '';
+    PRODUCTS.slice(0, 4).forEach(p => homeGrid.appendChild(createProductCard(p)));
+  }
+  if (menGrid) {
+    menGrid.innerHTML = '';
+    PRODUCTS.filter(p => p.cat === 'mens').forEach(p => menGrid.appendChild(createProductCard(p)));
+  }
+  if (womenGrid) {
+    womenGrid.innerHTML = '';
+    PRODUCTS.filter(p => p.cat === 'womens').forEach(p => womenGrid.appendChild(createProductCard(p)));
+  }
+}
+
+function filterP(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cat-section').forEach(sec => {
+    const sCat = sec.getAttribute('data-cat');
+    if (cat === 'all') sec.style.display = '';
+    else if (cat === 'sets') sec.style.display = sCat.includes('sets') ? '' : 'none';
+    else sec.style.display = sCat.includes(cat) ? '' : 'none';
+  });
+}
+
+// CART LOGIC
+let cart = JSON.parse(localStorage.getItem('localCart') || '[]');
+
+function saveCart() {
+  localStorage.setItem('localCart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+function addToCart(id) {
+  const product = PRODUCTS.find(p => p.id === id);
+  if (!product) return;
+  const existing = cart.find(item => item.id === id);
+  if (existing) existing.qty += 1;
+  else cart.push({ ...product, qty: 1 });
+  saveCart();
+  openCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(item => item.id !== id);
+  saveCart();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+  saveCart();
+}
+
+function updateCartUI() {
+  const count = cart.reduce((sum, i) => sum + i.qty, 0);
+  const countEl = document.getElementById('cartCount');
+  countEl.textContent = count;
+  if (count > 0) countEl.classList.add('show');
+  else countEl.classList.remove('show');
+
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<p class="empty-cart-message">Your cart is empty.</p>';
+    footerEl.style.display = 'none';
+    return;
+  }
+  footerEl.style.display = 'block';
+  itemsEl.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}"/>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">R ${item.price.toLocaleString()}</div>
+        <div class="quantity-controls">
+          <button onclick="changeQty('${item.id}', -1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty('${item.id}', 1)">+</button>
+        </div>
+        <button class="remove-item-btn" onclick="removeFromCart('${item.id}')">Remove</button>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  document.getElementById('cartTotal').textContent = 'R ' + total.toLocaleString();
+}
+
+function toggleCart() {
+  document.getElementById('cartPanel').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+function openCart() {
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+}
+
+// CHECKOUT
+function openCheckout() {
+  if (cart.length === 0) return;
+  document.getElementById('checkoutModal').classList.add('open');
+  showStep(1);
+}
+function closeCheckout() {
+  document.getElementById('checkoutModal').classList.remove('open');
+  if (document.getElementById('step3').classList.contains('active')) {
+    cart = [];
+    saveCart();
+    toggleCart();
+  }
+}
+function showStep(n) {
+  document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  const titles = { 1: 'Delivery Details', 2: 'Payment Information', 3: 'Order Complete' };
+  document.getElementById('checkoutTitle').textContent = titles[n];
+}
+function goToPayment(e) {
+  e.preventDefault();
+  showStep(2);
+}
+function backToDelivery() {
+  showStep(1);
+}
+function submitOrder(e) {
+  e.preventDefault();
+  document.getElementById('orderNum').textContent = 'LOC' + Math.floor(Math.random() * 90000 + 10000);
+  showStep(3);
+}
+
+// CONTACT
+function submitContact(e) {
+  e.preventDefault();
+  document.getElementById('formOk').style.display = 'block';
+  e.target.reset();
+  setTimeout(() => {
+    document.getElementById('formOk').style.display = 'none';
+  }, 4000);
+}
+
+// INIT
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  updateCartUI();
+});
+</script>
+
+</body>
+</html>
